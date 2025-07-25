@@ -2,6 +2,8 @@
   "name": "paper-trail-monorepo",
   "private": true,
   "scripts": {
+    "build:client": "turbo run build --filter=client",
+    "build:express-backend": "turbo run build --filter=express-backend",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
