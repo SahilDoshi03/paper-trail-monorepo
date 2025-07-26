@@ -51,13 +51,13 @@ export async function updateDocument(
   }
 }
 
-export async function getDocuments(): Promise<EditorDocument[]> {
+export async function getDocuments(userId: string): Promise<EditorDocument[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
 
     const res = await fetch(`${baseUrl}/api/documents`, {
       headers: {
-        'x-user-id': '1'
+        'x-user-id': userId
       }
     });
 
