@@ -92,7 +92,19 @@ const createDocument = async (req: Request, res: Response) => {
 
 const updateDocument = async (req: Request, res: Response) => {
   const docId = req.params.id;
-  const userId = req.body.id;
+
+  const schema = z.object({
+    "x-user-id": z.coerce.string(),
+  });
+
+  const result = schema.safeParse(req.headers);
+
+  if (!result.success) {
+    res.status(400).json({ error: "Invalid or missing userId" });
+    return;
+  }
+
+  const userId: string = result.data["x-user-id"];
 
   try {
     const doc = req.body;
@@ -125,7 +137,19 @@ const updateDocument = async (req: Request, res: Response) => {
 
 const deleteDocument = async (req: Request, res: Response) => {
   const docId = req.params.id;
-  const userId = req.body.id;
+
+  const schema = z.object({
+    "x-user-id": z.coerce.string(),
+  });
+
+  const result = schema.safeParse(req.headers);
+
+  if (!result.success) {
+    res.status(400).json({ error: "Invalid or missing userId" });
+    return;
+  }
+
+  const userId: string = result.data["x-user-id"];
 
   try {
     const document = await documentService.getDocumentById(docId);

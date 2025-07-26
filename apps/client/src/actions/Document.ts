@@ -5,7 +5,7 @@ import { EditorDocument } from "@/app/lib/schemas/Document";
 export async function getDocument(userId: string, docId: string): Promise<EditorDocument | null> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
-    const res = await fetch(`${baseUrl}/api/documents/${docId}?userId=${1}`, {
+    const res = await fetch(`${baseUrl}/api/documents/${docId}`, {
       method: "GET",
       headers: {
         'x-user-id': userId
