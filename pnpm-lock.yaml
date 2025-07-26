@@ -105,6 +105,9 @@ importers:
 
   apps/express-backend:
     dependencies:
+      '@paper-trail/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@prisma/client':
         specifier: ^6.11.1
         version: 6.12.0(prisma@6.12.0(typescript@5.8.3))(typescript@5.8.3)

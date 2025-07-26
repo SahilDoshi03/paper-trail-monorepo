@@ -5,8 +5,8 @@
     "rootDir": "./",    
     "baseUrl": "./",   
     "paths": {
-      "@paper-trail-monorepo/db/*": [
-        "packages/db/*"
+      "@paper-trail/*": [
+        "packages/*"
       ]
     },
     "esModuleInterop": true,
