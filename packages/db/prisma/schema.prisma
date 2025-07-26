@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ElementNode {
+  id              String     @id @default(cuid())
+  type            String
+  textAlign       String
+  fontFamily      String
+  paraSpaceAfter  Int
+  paraSpaceBefore Int
+  lineHeight      Float
+  documentId      String
+  document        Document   @relation(fields: [documentId], references: [id])
+  children        TextNode[]
+}
+
+model TextNode {
+  id              String      @id @default(cuid())
+  text            String
+  textAlign       String
+  color           String
+  fontSize        Int
+  bold            Boolean
+  italic          Boolean
+  underline       Boolean
+  backgroundColor String
+  elementId       String
+  element         ElementNode @relation(fields: [elementId], references: [id])
+}
+
+model Document {
+  id               String        @id @default(cuid())
+  title            String        @default("Untitled Document")
+  elements         ElementNode[]
+  ownerId          String
+  readAccessUsers  String[]
+  writeAccessUsers String[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}

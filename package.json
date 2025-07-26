@@ -4,8 +4,10 @@
   "scripts": {
     "build:client": "turbo run build --filter=client",
     "build:express-backend": "turbo run build --filter=express-backend",
+    "build:db": "turbo run build --filter=db",
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:express-backend": "turbo run dev --filter=express-backend",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "rootDir": "./",    
+    "baseUrl": "./",   
+    "paths": {
+      "@paper-trail-monorepo/db/*": [
+        "packages/db/*"
+      ]
+    },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true, 
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
