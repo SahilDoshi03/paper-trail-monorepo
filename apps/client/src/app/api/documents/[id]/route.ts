@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (
-  _req: NextRequest,
+  req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) => {
   const { id } = await context.params;
+  const headers = req.headers
 
   try {
-    const res = await fetch(`http://localhost:3001/api/documents/${id}`);
+    const res = await fetch(`http://localhost:3001/api/documents/${id}`,{
+      headers
+    });
     if (!res.ok) {
       return NextResponse.json({ error: "Document not found" }, { status: res.status });
     }
@@ -23,10 +26,11 @@ export const GET = async (
 export const PATCH = async (req: NextRequest, context: { params: Promise<{ id: string }> }) => {
   const { id } = await context.params;
   const body = await req.json();
+  const headers = req.headers
 
   const res = await fetch(`http://localhost:3001/api/documents/${id}`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
+    headers,
     body: JSON.stringify(body),
   });
 

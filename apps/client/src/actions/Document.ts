@@ -2,14 +2,14 @@
 
 import { EditorDocument } from "@/app/lib/schemas/Document";
 
-export async function getDocument(docId: string): Promise<EditorDocument | null> {
+export async function getDocument(userId: string, docId: string): Promise<EditorDocument | null> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
     const res = await fetch(`${baseUrl}/api/documents/${docId}?userId=${1}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-      },
+        'x-user-id': userId
+      }
     });
     if (!res.ok) {
       console.error(`Failed to fetch document: ${res.statusText}`);
@@ -24,6 +24,7 @@ export async function getDocument(docId: string): Promise<EditorDocument | null>
 }
 
 export async function updateDocument(
+  userId: string,
   docId: string,
   docValue: Partial<EditorDocument>,
 ): Promise<EditorDocument | null> {
@@ -32,7 +33,7 @@ export async function updateDocument(
     const res = await fetch(`${baseUrl}/api/documents/${docId}`, {
       method: "PATCH",
       headers: {
-        "Content-Type": "application/json",
+        'x-user-id': userId
       },
       body: JSON.stringify(docValue),
     });
@@ -74,14 +75,14 @@ export async function getDocuments(userId: string): Promise<EditorDocument[]> {
   }
 }
 
-export async function createDocument(): Promise<EditorDocument | null> {
+export async function createDocument(userId: string): Promise<EditorDocument | null> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
     const res = await fetch(`${baseUrl}/api/documents`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-      },
+        'x-user-id': userId
+      }
     });
 
     if (!res.ok) {

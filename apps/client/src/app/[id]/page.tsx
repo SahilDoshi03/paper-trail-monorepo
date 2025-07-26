@@ -10,10 +10,11 @@ import { getDocument, updateDocument } from "@/actions/Document";
 import type { EditorDocument } from "@/lib/schemas/Document";
 import { notFound, useParams } from "next/navigation";
 import { useState, useRef, useEffect } from 'react';
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Document() {
+  const { data: userData } = useSession();
   const router = useRouter()
   const params = useParams()
   const [docValue, setDocValue] = useState<EditorDocument | null>(null);
@@ -24,10 +25,17 @@ export default function Document() {
 
   const docId = params.id as string;
 
+  const userId = userData?.user?.id;
+
   useEffect(() => {
     const fetchDocument = async () => {
       setLoading(true);
-      const fetchedDoc = await getDocument(docId);
+
+      if (!userId) {
+        return;
+      }
+
+      const fetchedDoc = await getDocument(userId, docId);
       if (!fetchedDoc) {
         notFound();
       }
@@ -55,7 +63,10 @@ export default function Document() {
   const handleTitleBlur = async () => {
     setIsEditing(false);
     if (docValue && currentTitle !== docValue.title) {
-      await updateDocument(docId, { title: currentTitle });
+      if (!userId) {
+        return;
+      }
+      await updateDocument(userId, docId, { title: currentTitle });
       setDocValue({ ...docValue, title: currentTitle });
     }
   };

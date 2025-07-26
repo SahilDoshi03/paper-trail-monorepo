@@ -85,7 +85,10 @@ type EditorComponentProps = {
 };
 
 const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorComponentProps) => {
-  const session = useSession()
+  const { data: sessionData } = useSession()
+
+  const userId = sessionData?.user?.id
+
   const initialValue: Descendant[] =
     docValue.elements && docValue.elements.length > 0
       ? docValue.elements
@@ -119,7 +122,7 @@ const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorCompo
         yProvider.awareness as any,
         {
           data: {
-            name: session?.data?.user?.name || "sahil",
+            name: sessionData?.user?.name || "sahil",
             color: "#215915",
           }
         }
@@ -142,7 +145,10 @@ const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorCompo
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   const saveDocument = async (elements: Descendant[]) => {
-    await updateDocument(docId, { elements });
+    if(!userId){
+      return
+    }
+    await updateDocument(userId, docId, { elements });
   };
 
   const renderElement = useCallback((props: RenderElementProps) => {

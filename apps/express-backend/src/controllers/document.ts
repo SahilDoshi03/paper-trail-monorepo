@@ -4,9 +4,8 @@ import { PartialDocumentSchema } from "../schemas/Document";
 import z from "zod";
 
 const getDocuments = async (req: Request, res: Response) => {
-
   const schema = z.object({
-    'x-user-id': z.coerce.string(),
+    "x-user-id": z.coerce.string(),
   });
 
   const result = schema.safeParse(req.headers);
@@ -16,8 +15,7 @@ const getDocuments = async (req: Request, res: Response) => {
     return;
   }
 
-  const userId = result.data['x-user-id'];
-
+  const userId = result.data["x-user-id"];
 
   try {
     if (userId) {
@@ -33,21 +31,20 @@ const getDocuments = async (req: Request, res: Response) => {
 };
 
 const getDocumentById = async (req: Request, res: Response) => {
-  const docId = req.params.id
+  const docId = req.params.id;
 
   const schema = z.object({
-    'x-user-id': z.coerce.string(),
+    "x-user-id": z.coerce.string(),
   });
 
   const result = schema.safeParse(req.headers);
-
 
   if (!result.success) {
     res.status(400).json({ error: "Invalid or missing userId" });
     return;
   }
 
-  const userId: string = result.data['x-user-id'];
+  const userId: string = result.data["x-user-id"];
 
   try {
     const document = await documentService.getDocumentById(docId);
@@ -72,9 +69,21 @@ const getDocumentById = async (req: Request, res: Response) => {
 };
 
 const createDocument = async (req: Request, res: Response) => {
-  const ownerId: string = req.body.ownerId
+  const schema = z.object({
+    "x-user-id": z.coerce.string(),
+  });
+
+  const result = schema.safeParse(req.headers);
+
+  if (!result.success) {
+    res.status(400).json({ error: "Invalid or missing userId" });
+    return;
+  }
+
+  const userId: string = result.data["x-user-id"];
+
   try {
-    const document = await documentService.createDocument(ownerId);
+    const document = await documentService.createDocument(userId);
     res.status(201).json({ document });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
@@ -142,5 +151,5 @@ export {
   getDocumentById,
   createDocument,
   updateDocument,
-  deleteDocument
-}
+  deleteDocument,
+};
