@@ -1,23 +1,23 @@
-import { auth } from "@/auth"
+import NextAuth from "next-auth";
+import authConfig from "./auth.config";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export async function middleware(req: NextRequest) {
-  const session = await auth()
+const { auth } = NextAuth(authConfig);
 
-  const isAuthenticated = !!session?.user
+export async function middleware(req: NextRequest) {
+  const session = await auth();
+
+  const isAuthenticated = !!session?.user;
 
   if (!isAuthenticated) {
-    const loginUrl = new URL('/auth/login', req.url);
+    const loginUrl = new URL("/auth/login", req.url);
     return NextResponse.redirect(loginUrl);
   }
 
-  return NextResponse.next()
+  return NextResponse.next();
 }
 
-export const config ={
-  matcher:[
-    '/',
-    '/:id'
-  ]
-}
+export const config = {
+  matcher: ["/", "/:id"],
+};

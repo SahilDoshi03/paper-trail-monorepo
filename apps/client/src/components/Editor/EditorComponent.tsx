@@ -138,6 +138,7 @@ const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorCompo
 
     return e;
   }, []);
+
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   const saveDocument = async (elements: Descendant[]) => {

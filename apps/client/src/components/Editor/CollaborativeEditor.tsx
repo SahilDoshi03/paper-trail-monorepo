@@ -26,7 +26,7 @@ export function CollaborativeEditor({ docId, docValue }: CollaborativeComponentP
     return () => {
       yProvider?.off("sync", setConnected);
     };
-  }, [room]);
+  }, [room, yProvider]);
 
   if (!connected || !sharedType) {
     return <div>Loading...</div>

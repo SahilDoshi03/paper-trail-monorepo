@@ -1,10 +1,10 @@
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@paper-trail/db";
-import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
-import Google from "next-auth/providers/google"
+import authConfig from "./auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [Google, GitHub],
-})
+  session: { strategy: "jwt" },
+  ...authConfig,
+});
