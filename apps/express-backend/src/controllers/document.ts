@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import * as documentService from "../services/document.ts";
 import z from "zod";
 

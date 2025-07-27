@@ -1,5 +1,5 @@
 
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import * as userService from "../services/user.ts";
 import { PartialUserSchema, UserSchema } from "../schemas/User.ts";
 import z from "zod";

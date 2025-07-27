@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-import express, { Request, Response } from "express";
+import type { Request, Response } from "express";
+import express from "express";
 import { validateUserId } from "./middleware/auth.ts";
 import documentRouter from "./routes/document.ts";
 import userRouter from "./routes/user.ts";
