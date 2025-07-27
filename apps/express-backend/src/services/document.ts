@@ -1,7 +1,7 @@
 import { prisma, type Prisma } from "@paper-trail/db";
 import { CustomElement, PartialDocumentType } from "../schemas/Document.ts";
 
-const getDocuments = async (ownerId?: string) => {
+const getDocuments = async (ownerId: string) => {
   try {
     return await prisma.document.findMany({
       where: { ownerId },
