@@ -33,6 +33,7 @@ export async function updateDocument(
     const res = await fetch(`${baseUrl}/api/documents/${docId}`, {
       method: "PATCH",
       headers: {
+        'Content-Type': 'application/json',
         'x-user-id': userId
       },
       body: JSON.stringify(docValue),

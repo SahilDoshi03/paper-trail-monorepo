@@ -81,11 +81,11 @@ model Authenticator {
 model ElementNode {
   id              String     @id @default(cuid())
   type            String
-  textAlign       String
-  fontFamily      String
-  paraSpaceAfter  Int
-  paraSpaceBefore Int
-  lineHeight      Float
+  textAlign       String?
+  fontFamily      String?
+  paraSpaceAfter  Int?
+  paraSpaceBefore Int?
+  lineHeight      Float?
   documentId      String
   document        Document   @relation(fields: [documentId], references: [id])
   children        TextNode[]
@@ -93,14 +93,14 @@ model ElementNode {
 
 model TextNode {
   id              String      @id @default(cuid())
-  text            String
-  textAlign       String
-  color           String
-  fontSize        Int
-  bold            Boolean
-  italic          Boolean
-  underline       Boolean
-  backgroundColor String
+  text            String?
+  textAlign       String?
+  color           String?
+  fontSize        Int?
+  bold            Boolean?
+  italic          Boolean?
+  underline       Boolean?
+  backgroundColor String?
   elementId       String
   element         ElementNode @relation(fields: [elementId], references: [id])
 }

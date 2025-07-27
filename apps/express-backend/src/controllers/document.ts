@@ -106,8 +106,9 @@ const updateDocument = async (req: Request, res: Response) => {
 
   const userId: string = result.data["x-user-id"];
 
+  const doc = req.body;
+
   try {
-    const doc = req.body;
     const document = await documentService.getDocumentById(docId);
 
     if (!document) {
@@ -124,12 +125,12 @@ const updateDocument = async (req: Request, res: Response) => {
     }
 
     const updatedDocument = await documentService.updateDocument(docId, doc);
-    PartialDocumentSchema.parse(doc);
 
     res.status(200).json({ document: updatedDocument });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      res.status(400).json({ error: "Validation Error" });
+      res.status(400).json({ error: "Validation Error", details: error });
+      return
     }
     res.status(500).json({ error: "Failed to update document" });
   }

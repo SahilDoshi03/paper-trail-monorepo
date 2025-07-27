@@ -7316,11 +7316,11 @@ export namespace Prisma {
   export type ElementNodeGroupByOutputType = {
     id: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign: string | null
+    fontFamily: string | null
+    paraSpaceAfter: number | null
+    paraSpaceBefore: number | null
+    lineHeight: number | null
     documentId: string
     _count: ElementNodeCountAggregateOutputType | null
     _avg: ElementNodeAvgAggregateOutputType | null
@@ -7414,11 +7414,11 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       type: string
-      textAlign: string
-      fontFamily: string
-      paraSpaceAfter: number
-      paraSpaceBefore: number
-      lineHeight: number
+      textAlign: string | null
+      fontFamily: string | null
+      paraSpaceAfter: number | null
+      paraSpaceBefore: number | null
+      lineHeight: number | null
       documentId: string
     }, ExtArgs["result"]["elementNode"]>
     composites: {}
@@ -8488,14 +8488,14 @@ export namespace Prisma {
 
   export type TextNodeGroupByOutputType = {
     id: string
-    text: string
-    textAlign: string
-    color: string
-    fontSize: number
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    backgroundColor: string
+    text: string | null
+    textAlign: string | null
+    color: string | null
+    fontSize: number | null
+    bold: boolean | null
+    italic: boolean | null
+    underline: boolean | null
+    backgroundColor: string | null
     elementId: string
     _count: TextNodeCountAggregateOutputType | null
     _avg: TextNodeAvgAggregateOutputType | null
@@ -8591,14 +8591,14 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      text: string
-      textAlign: string
-      color: string
-      fontSize: number
-      bold: boolean
-      italic: boolean
-      underline: boolean
-      backgroundColor: string
+      text: string | null
+      textAlign: string | null
+      color: string | null
+      fontSize: number | null
+      bold: boolean | null
+      italic: boolean | null
+      underline: boolean | null
+      backgroundColor: string | null
       elementId: string
     }, ExtArgs["result"]["textNode"]>
     composites: {}
@@ -11100,11 +11100,11 @@ export namespace Prisma {
     NOT?: ElementNodeWhereInput | ElementNodeWhereInput[]
     id?: StringFilter<"ElementNode"> | string
     type?: StringFilter<"ElementNode"> | string
-    textAlign?: StringFilter<"ElementNode"> | string
-    fontFamily?: StringFilter<"ElementNode"> | string
-    paraSpaceAfter?: IntFilter<"ElementNode"> | number
-    paraSpaceBefore?: IntFilter<"ElementNode"> | number
-    lineHeight?: FloatFilter<"ElementNode"> | number
+    textAlign?: StringNullableFilter<"ElementNode"> | string | null
+    fontFamily?: StringNullableFilter<"ElementNode"> | string | null
+    paraSpaceAfter?: IntNullableFilter<"ElementNode"> | number | null
+    paraSpaceBefore?: IntNullableFilter<"ElementNode"> | number | null
+    lineHeight?: FloatNullableFilter<"ElementNode"> | number | null
     documentId?: StringFilter<"ElementNode"> | string
     document?: XOR<DocumentScalarRelationFilter, DocumentWhereInput>
     children?: TextNodeListRelationFilter
@@ -11113,11 +11113,11 @@ export namespace Prisma {
   export type ElementNodeOrderByWithRelationInput = {
     id?: SortOrder
     type?: SortOrder
-    textAlign?: SortOrder
-    fontFamily?: SortOrder
-    paraSpaceAfter?: SortOrder
-    paraSpaceBefore?: SortOrder
-    lineHeight?: SortOrder
+    textAlign?: SortOrderInput | SortOrder
+    fontFamily?: SortOrderInput | SortOrder
+    paraSpaceAfter?: SortOrderInput | SortOrder
+    paraSpaceBefore?: SortOrderInput | SortOrder
+    lineHeight?: SortOrderInput | SortOrder
     documentId?: SortOrder
     document?: DocumentOrderByWithRelationInput
     children?: TextNodeOrderByRelationAggregateInput
@@ -11129,11 +11129,11 @@ export namespace Prisma {
     OR?: ElementNodeWhereInput[]
     NOT?: ElementNodeWhereInput | ElementNodeWhereInput[]
     type?: StringFilter<"ElementNode"> | string
-    textAlign?: StringFilter<"ElementNode"> | string
-    fontFamily?: StringFilter<"ElementNode"> | string
-    paraSpaceAfter?: IntFilter<"ElementNode"> | number
-    paraSpaceBefore?: IntFilter<"ElementNode"> | number
-    lineHeight?: FloatFilter<"ElementNode"> | number
+    textAlign?: StringNullableFilter<"ElementNode"> | string | null
+    fontFamily?: StringNullableFilter<"ElementNode"> | string | null
+    paraSpaceAfter?: IntNullableFilter<"ElementNode"> | number | null
+    paraSpaceBefore?: IntNullableFilter<"ElementNode"> | number | null
+    lineHeight?: FloatNullableFilter<"ElementNode"> | number | null
     documentId?: StringFilter<"ElementNode"> | string
     document?: XOR<DocumentScalarRelationFilter, DocumentWhereInput>
     children?: TextNodeListRelationFilter
@@ -11142,11 +11142,11 @@ export namespace Prisma {
   export type ElementNodeOrderByWithAggregationInput = {
     id?: SortOrder
     type?: SortOrder
-    textAlign?: SortOrder
-    fontFamily?: SortOrder
-    paraSpaceAfter?: SortOrder
-    paraSpaceBefore?: SortOrder
-    lineHeight?: SortOrder
+    textAlign?: SortOrderInput | SortOrder
+    fontFamily?: SortOrderInput | SortOrder
+    paraSpaceAfter?: SortOrderInput | SortOrder
+    paraSpaceBefore?: SortOrderInput | SortOrder
+    lineHeight?: SortOrderInput | SortOrder
     documentId?: SortOrder
     _count?: ElementNodeCountOrderByAggregateInput
     _avg?: ElementNodeAvgOrderByAggregateInput
@@ -11161,11 +11161,11 @@ export namespace Prisma {
     NOT?: ElementNodeScalarWhereWithAggregatesInput | ElementNodeScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ElementNode"> | string
     type?: StringWithAggregatesFilter<"ElementNode"> | string
-    textAlign?: StringWithAggregatesFilter<"ElementNode"> | string
-    fontFamily?: StringWithAggregatesFilter<"ElementNode"> | string
-    paraSpaceAfter?: IntWithAggregatesFilter<"ElementNode"> | number
-    paraSpaceBefore?: IntWithAggregatesFilter<"ElementNode"> | number
-    lineHeight?: FloatWithAggregatesFilter<"ElementNode"> | number
+    textAlign?: StringNullableWithAggregatesFilter<"ElementNode"> | string | null
+    fontFamily?: StringNullableWithAggregatesFilter<"ElementNode"> | string | null
+    paraSpaceAfter?: IntNullableWithAggregatesFilter<"ElementNode"> | number | null
+    paraSpaceBefore?: IntNullableWithAggregatesFilter<"ElementNode"> | number | null
+    lineHeight?: FloatNullableWithAggregatesFilter<"ElementNode"> | number | null
     documentId?: StringWithAggregatesFilter<"ElementNode"> | string
   }
 
@@ -11174,28 +11174,28 @@ export namespace Prisma {
     OR?: TextNodeWhereInput[]
     NOT?: TextNodeWhereInput | TextNodeWhereInput[]
     id?: StringFilter<"TextNode"> | string
-    text?: StringFilter<"TextNode"> | string
-    textAlign?: StringFilter<"TextNode"> | string
-    color?: StringFilter<"TextNode"> | string
-    fontSize?: IntFilter<"TextNode"> | number
-    bold?: BoolFilter<"TextNode"> | boolean
-    italic?: BoolFilter<"TextNode"> | boolean
-    underline?: BoolFilter<"TextNode"> | boolean
-    backgroundColor?: StringFilter<"TextNode"> | string
+    text?: StringNullableFilter<"TextNode"> | string | null
+    textAlign?: StringNullableFilter<"TextNode"> | string | null
+    color?: StringNullableFilter<"TextNode"> | string | null
+    fontSize?: IntNullableFilter<"TextNode"> | number | null
+    bold?: BoolNullableFilter<"TextNode"> | boolean | null
+    italic?: BoolNullableFilter<"TextNode"> | boolean | null
+    underline?: BoolNullableFilter<"TextNode"> | boolean | null
+    backgroundColor?: StringNullableFilter<"TextNode"> | string | null
     elementId?: StringFilter<"TextNode"> | string
     element?: XOR<ElementNodeScalarRelationFilter, ElementNodeWhereInput>
   }
 
   export type TextNodeOrderByWithRelationInput = {
     id?: SortOrder
-    text?: SortOrder
-    textAlign?: SortOrder
-    color?: SortOrder
-    fontSize?: SortOrder
-    bold?: SortOrder
-    italic?: SortOrder
-    underline?: SortOrder
-    backgroundColor?: SortOrder
+    text?: SortOrderInput | SortOrder
+    textAlign?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    fontSize?: SortOrderInput | SortOrder
+    bold?: SortOrderInput | SortOrder
+    italic?: SortOrderInput | SortOrder
+    underline?: SortOrderInput | SortOrder
+    backgroundColor?: SortOrderInput | SortOrder
     elementId?: SortOrder
     element?: ElementNodeOrderByWithRelationInput
   }
@@ -11205,28 +11205,28 @@ export namespace Prisma {
     AND?: TextNodeWhereInput | TextNodeWhereInput[]
     OR?: TextNodeWhereInput[]
     NOT?: TextNodeWhereInput | TextNodeWhereInput[]
-    text?: StringFilter<"TextNode"> | string
-    textAlign?: StringFilter<"TextNode"> | string
-    color?: StringFilter<"TextNode"> | string
-    fontSize?: IntFilter<"TextNode"> | number
-    bold?: BoolFilter<"TextNode"> | boolean
-    italic?: BoolFilter<"TextNode"> | boolean
-    underline?: BoolFilter<"TextNode"> | boolean
-    backgroundColor?: StringFilter<"TextNode"> | string
+    text?: StringNullableFilter<"TextNode"> | string | null
+    textAlign?: StringNullableFilter<"TextNode"> | string | null
+    color?: StringNullableFilter<"TextNode"> | string | null
+    fontSize?: IntNullableFilter<"TextNode"> | number | null
+    bold?: BoolNullableFilter<"TextNode"> | boolean | null
+    italic?: BoolNullableFilter<"TextNode"> | boolean | null
+    underline?: BoolNullableFilter<"TextNode"> | boolean | null
+    backgroundColor?: StringNullableFilter<"TextNode"> | string | null
     elementId?: StringFilter<"TextNode"> | string
     element?: XOR<ElementNodeScalarRelationFilter, ElementNodeWhereInput>
   }, "id">
 
   export type TextNodeOrderByWithAggregationInput = {
     id?: SortOrder
-    text?: SortOrder
-    textAlign?: SortOrder
-    color?: SortOrder
-    fontSize?: SortOrder
-    bold?: SortOrder
-    italic?: SortOrder
-    underline?: SortOrder
-    backgroundColor?: SortOrder
+    text?: SortOrderInput | SortOrder
+    textAlign?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    fontSize?: SortOrderInput | SortOrder
+    bold?: SortOrderInput | SortOrder
+    italic?: SortOrderInput | SortOrder
+    underline?: SortOrderInput | SortOrder
+    backgroundColor?: SortOrderInput | SortOrder
     elementId?: SortOrder
     _count?: TextNodeCountOrderByAggregateInput
     _avg?: TextNodeAvgOrderByAggregateInput
@@ -11240,14 +11240,14 @@ export namespace Prisma {
     OR?: TextNodeScalarWhereWithAggregatesInput[]
     NOT?: TextNodeScalarWhereWithAggregatesInput | TextNodeScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"TextNode"> | string
-    text?: StringWithAggregatesFilter<"TextNode"> | string
-    textAlign?: StringWithAggregatesFilter<"TextNode"> | string
-    color?: StringWithAggregatesFilter<"TextNode"> | string
-    fontSize?: IntWithAggregatesFilter<"TextNode"> | number
-    bold?: BoolWithAggregatesFilter<"TextNode"> | boolean
-    italic?: BoolWithAggregatesFilter<"TextNode"> | boolean
-    underline?: BoolWithAggregatesFilter<"TextNode"> | boolean
-    backgroundColor?: StringWithAggregatesFilter<"TextNode"> | string
+    text?: StringNullableWithAggregatesFilter<"TextNode"> | string | null
+    textAlign?: StringNullableWithAggregatesFilter<"TextNode"> | string | null
+    color?: StringNullableWithAggregatesFilter<"TextNode"> | string | null
+    fontSize?: IntNullableWithAggregatesFilter<"TextNode"> | number | null
+    bold?: BoolNullableWithAggregatesFilter<"TextNode"> | boolean | null
+    italic?: BoolNullableWithAggregatesFilter<"TextNode"> | boolean | null
+    underline?: BoolNullableWithAggregatesFilter<"TextNode"> | boolean | null
+    backgroundColor?: StringNullableWithAggregatesFilter<"TextNode"> | string | null
     elementId?: StringWithAggregatesFilter<"TextNode"> | string
   }
 
@@ -11685,11 +11685,11 @@ export namespace Prisma {
   export type ElementNodeCreateInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
     document: DocumentCreateNestedOneWithoutElementsInput
     children?: TextNodeCreateNestedManyWithoutElementInput
   }
@@ -11697,11 +11697,11 @@ export namespace Prisma {
   export type ElementNodeUncheckedCreateInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
     documentId: string
     children?: TextNodeUncheckedCreateNestedManyWithoutElementInput
   }
@@ -11709,11 +11709,11 @@ export namespace Prisma {
   export type ElementNodeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
     document?: DocumentUpdateOneRequiredWithoutElementsNestedInput
     children?: TextNodeUpdateManyWithoutElementNestedInput
   }
@@ -11721,11 +11721,11 @@ export namespace Prisma {
   export type ElementNodeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
     documentId?: StringFieldUpdateOperationsInput | string
     children?: TextNodeUncheckedUpdateManyWithoutElementNestedInput
   }
@@ -11733,122 +11733,122 @@ export namespace Prisma {
   export type ElementNodeCreateManyInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
     documentId: string
   }
 
   export type ElementNodeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type ElementNodeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
     documentId?: StringFieldUpdateOperationsInput | string
   }
 
   export type TextNodeCreateInput = {
     id?: string
-    text: string
-    textAlign: string
-    color: string
-    fontSize: number
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    backgroundColor: string
+    text?: string | null
+    textAlign?: string | null
+    color?: string | null
+    fontSize?: number | null
+    bold?: boolean | null
+    italic?: boolean | null
+    underline?: boolean | null
+    backgroundColor?: string | null
     element: ElementNodeCreateNestedOneWithoutChildrenInput
   }
 
   export type TextNodeUncheckedCreateInput = {
     id?: string
-    text: string
-    textAlign: string
-    color: string
-    fontSize: number
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    backgroundColor: string
+    text?: string | null
+    textAlign?: string | null
+    color?: string | null
+    fontSize?: number | null
+    bold?: boolean | null
+    italic?: boolean | null
+    underline?: boolean | null
+    backgroundColor?: string | null
     elementId: string
   }
 
   export type TextNodeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    fontSize?: IntFieldUpdateOperationsInput | number
-    bold?: BoolFieldUpdateOperationsInput | boolean
-    italic?: BoolFieldUpdateOperationsInput | boolean
-    underline?: BoolFieldUpdateOperationsInput | boolean
-    backgroundColor?: StringFieldUpdateOperationsInput | string
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    fontSize?: NullableIntFieldUpdateOperationsInput | number | null
+    bold?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    italic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    underline?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    backgroundColor?: NullableStringFieldUpdateOperationsInput | string | null
     element?: ElementNodeUpdateOneRequiredWithoutChildrenNestedInput
   }
 
   export type TextNodeUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    fontSize?: IntFieldUpdateOperationsInput | number
-    bold?: BoolFieldUpdateOperationsInput | boolean
-    italic?: BoolFieldUpdateOperationsInput | boolean
-    underline?: BoolFieldUpdateOperationsInput | boolean
-    backgroundColor?: StringFieldUpdateOperationsInput | string
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    fontSize?: NullableIntFieldUpdateOperationsInput | number | null
+    bold?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    italic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    underline?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    backgroundColor?: NullableStringFieldUpdateOperationsInput | string | null
     elementId?: StringFieldUpdateOperationsInput | string
   }
 
   export type TextNodeCreateManyInput = {
     id?: string
-    text: string
-    textAlign: string
-    color: string
-    fontSize: number
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    backgroundColor: string
+    text?: string | null
+    textAlign?: string | null
+    color?: string | null
+    fontSize?: number | null
+    bold?: boolean | null
+    italic?: boolean | null
+    underline?: boolean | null
+    backgroundColor?: string | null
     elementId: string
   }
 
   export type TextNodeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    fontSize?: IntFieldUpdateOperationsInput | number
-    bold?: BoolFieldUpdateOperationsInput | boolean
-    italic?: BoolFieldUpdateOperationsInput | boolean
-    underline?: BoolFieldUpdateOperationsInput | boolean
-    backgroundColor?: StringFieldUpdateOperationsInput | string
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    fontSize?: NullableIntFieldUpdateOperationsInput | number | null
+    bold?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    italic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    underline?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    backgroundColor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TextNodeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    fontSize?: IntFieldUpdateOperationsInput | number
-    bold?: BoolFieldUpdateOperationsInput | boolean
-    italic?: BoolFieldUpdateOperationsInput | boolean
-    underline?: BoolFieldUpdateOperationsInput | boolean
-    backgroundColor?: StringFieldUpdateOperationsInput | string
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    fontSize?: NullableIntFieldUpdateOperationsInput | number | null
+    bold?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    italic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    underline?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    backgroundColor?: NullableStringFieldUpdateOperationsInput | string | null
     elementId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -12333,15 +12333,15 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type DocumentScalarRelationFilter = {
@@ -12404,20 +12404,25 @@ export namespace Prisma {
     lineHeight?: SortOrder
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
   export type ElementNodeScalarRelationFilter = {
@@ -12470,6 +12475,14 @@ export namespace Prisma {
 
   export type TextNodeSumOrderByAggregateInput = {
     fontSize?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -12740,8 +12753,8 @@ export namespace Prisma {
     connect?: TextNodeWhereUniqueInput | TextNodeWhereUniqueInput[]
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
@@ -12788,6 +12801,10 @@ export namespace Prisma {
     create?: XOR<ElementNodeCreateWithoutChildrenInput, ElementNodeUncheckedCreateWithoutChildrenInput>
     connectOrCreate?: ElementNodeCreateOrConnectWithoutChildrenInput
     connect?: ElementNodeWhereUniqueInput
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
   }
 
   export type ElementNodeUpdateOneRequiredWithoutChildrenNestedInput = {
@@ -13059,20 +13076,33 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -13480,26 +13510,26 @@ export namespace Prisma {
 
   export type TextNodeCreateWithoutElementInput = {
     id?: string
-    text: string
-    textAlign: string
-    color: string
-    fontSize: number
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    backgroundColor: string
+    text?: string | null
+    textAlign?: string | null
+    color?: string | null
+    fontSize?: number | null
+    bold?: boolean | null
+    italic?: boolean | null
+    underline?: boolean | null
+    backgroundColor?: string | null
   }
 
   export type TextNodeUncheckedCreateWithoutElementInput = {
     id?: string
-    text: string
-    textAlign: string
-    color: string
-    fontSize: number
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    backgroundColor: string
+    text?: string | null
+    textAlign?: string | null
+    color?: string | null
+    fontSize?: number | null
+    bold?: boolean | null
+    italic?: boolean | null
+    underline?: boolean | null
+    backgroundColor?: string | null
   }
 
   export type TextNodeCreateOrConnectWithoutElementInput = {
@@ -13564,36 +13594,36 @@ export namespace Prisma {
     OR?: TextNodeScalarWhereInput[]
     NOT?: TextNodeScalarWhereInput | TextNodeScalarWhereInput[]
     id?: StringFilter<"TextNode"> | string
-    text?: StringFilter<"TextNode"> | string
-    textAlign?: StringFilter<"TextNode"> | string
-    color?: StringFilter<"TextNode"> | string
-    fontSize?: IntFilter<"TextNode"> | number
-    bold?: BoolFilter<"TextNode"> | boolean
-    italic?: BoolFilter<"TextNode"> | boolean
-    underline?: BoolFilter<"TextNode"> | boolean
-    backgroundColor?: StringFilter<"TextNode"> | string
+    text?: StringNullableFilter<"TextNode"> | string | null
+    textAlign?: StringNullableFilter<"TextNode"> | string | null
+    color?: StringNullableFilter<"TextNode"> | string | null
+    fontSize?: IntNullableFilter<"TextNode"> | number | null
+    bold?: BoolNullableFilter<"TextNode"> | boolean | null
+    italic?: BoolNullableFilter<"TextNode"> | boolean | null
+    underline?: BoolNullableFilter<"TextNode"> | boolean | null
+    backgroundColor?: StringNullableFilter<"TextNode"> | string | null
     elementId?: StringFilter<"TextNode"> | string
   }
 
   export type ElementNodeCreateWithoutChildrenInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
     document: DocumentCreateNestedOneWithoutElementsInput
   }
 
   export type ElementNodeUncheckedCreateWithoutChildrenInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
     documentId: string
   }
 
@@ -13616,44 +13646,44 @@ export namespace Prisma {
   export type ElementNodeUpdateWithoutChildrenInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
     document?: DocumentUpdateOneRequiredWithoutElementsNestedInput
   }
 
   export type ElementNodeUncheckedUpdateWithoutChildrenInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
     documentId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ElementNodeCreateWithoutDocumentInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
     children?: TextNodeCreateNestedManyWithoutElementInput
   }
 
   export type ElementNodeUncheckedCreateWithoutDocumentInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
     children?: TextNodeUncheckedCreateNestedManyWithoutElementInput
   }
 
@@ -13689,11 +13719,11 @@ export namespace Prisma {
     NOT?: ElementNodeScalarWhereInput | ElementNodeScalarWhereInput[]
     id?: StringFilter<"ElementNode"> | string
     type?: StringFilter<"ElementNode"> | string
-    textAlign?: StringFilter<"ElementNode"> | string
-    fontFamily?: StringFilter<"ElementNode"> | string
-    paraSpaceAfter?: IntFilter<"ElementNode"> | number
-    paraSpaceBefore?: IntFilter<"ElementNode"> | number
-    lineHeight?: FloatFilter<"ElementNode"> | number
+    textAlign?: StringNullableFilter<"ElementNode"> | string | null
+    fontFamily?: StringNullableFilter<"ElementNode"> | string | null
+    paraSpaceAfter?: IntNullableFilter<"ElementNode"> | number | null
+    paraSpaceBefore?: IntNullableFilter<"ElementNode"> | number | null
+    lineHeight?: FloatNullableFilter<"ElementNode"> | number | null
     documentId?: StringFilter<"ElementNode"> | string
   }
 
@@ -13827,92 +13857,92 @@ export namespace Prisma {
 
   export type TextNodeCreateManyElementInput = {
     id?: string
-    text: string
-    textAlign: string
-    color: string
-    fontSize: number
-    bold: boolean
-    italic: boolean
-    underline: boolean
-    backgroundColor: string
+    text?: string | null
+    textAlign?: string | null
+    color?: string | null
+    fontSize?: number | null
+    bold?: boolean | null
+    italic?: boolean | null
+    underline?: boolean | null
+    backgroundColor?: string | null
   }
 
   export type TextNodeUpdateWithoutElementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    fontSize?: IntFieldUpdateOperationsInput | number
-    bold?: BoolFieldUpdateOperationsInput | boolean
-    italic?: BoolFieldUpdateOperationsInput | boolean
-    underline?: BoolFieldUpdateOperationsInput | boolean
-    backgroundColor?: StringFieldUpdateOperationsInput | string
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    fontSize?: NullableIntFieldUpdateOperationsInput | number | null
+    bold?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    italic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    underline?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    backgroundColor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TextNodeUncheckedUpdateWithoutElementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    fontSize?: IntFieldUpdateOperationsInput | number
-    bold?: BoolFieldUpdateOperationsInput | boolean
-    italic?: BoolFieldUpdateOperationsInput | boolean
-    underline?: BoolFieldUpdateOperationsInput | boolean
-    backgroundColor?: StringFieldUpdateOperationsInput | string
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    fontSize?: NullableIntFieldUpdateOperationsInput | number | null
+    bold?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    italic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    underline?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    backgroundColor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TextNodeUncheckedUpdateManyWithoutElementInput = {
     id?: StringFieldUpdateOperationsInput | string
-    text?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    fontSize?: IntFieldUpdateOperationsInput | number
-    bold?: BoolFieldUpdateOperationsInput | boolean
-    italic?: BoolFieldUpdateOperationsInput | boolean
-    underline?: BoolFieldUpdateOperationsInput | boolean
-    backgroundColor?: StringFieldUpdateOperationsInput | string
+    text?: NullableStringFieldUpdateOperationsInput | string | null
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    fontSize?: NullableIntFieldUpdateOperationsInput | number | null
+    bold?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    italic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    underline?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    backgroundColor?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ElementNodeCreateManyDocumentInput = {
     id?: string
     type: string
-    textAlign: string
-    fontFamily: string
-    paraSpaceAfter: number
-    paraSpaceBefore: number
-    lineHeight: number
+    textAlign?: string | null
+    fontFamily?: string | null
+    paraSpaceAfter?: number | null
+    paraSpaceBefore?: number | null
+    lineHeight?: number | null
   }
 
   export type ElementNodeUpdateWithoutDocumentInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
     children?: TextNodeUpdateManyWithoutElementNestedInput
   }
 
   export type ElementNodeUncheckedUpdateWithoutDocumentInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
     children?: TextNodeUncheckedUpdateManyWithoutElementNestedInput
   }
 
   export type ElementNodeUncheckedUpdateManyWithoutDocumentInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
-    textAlign?: StringFieldUpdateOperationsInput | string
-    fontFamily?: StringFieldUpdateOperationsInput | string
-    paraSpaceAfter?: IntFieldUpdateOperationsInput | number
-    paraSpaceBefore?: IntFieldUpdateOperationsInput | number
-    lineHeight?: FloatFieldUpdateOperationsInput | number
+    textAlign?: NullableStringFieldUpdateOperationsInput | string | null
+    fontFamily?: NullableStringFieldUpdateOperationsInput | string | null
+    paraSpaceAfter?: NullableIntFieldUpdateOperationsInput | number | null
+    paraSpaceBefore?: NullableIntFieldUpdateOperationsInput | number | null
+    lineHeight?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
 
