@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
-import documentRouter from "./routes/document";
-import userRouter from "./routes/user";
+import { validateUserId } from "./middleware/auth.ts";
+import documentRouter from "./routes/document.ts";
+import userRouter from "./routes/user.ts";
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ app.get("/api/healthcheck", (_: Request, res: Response) => {
   res.status(200).send("App is running");
 });
 
-app.use("/api/documents", documentRouter);
+app.use("/api/documents", validateUserId, documentRouter);
 
 app.use("/api/users", userRouter);
 

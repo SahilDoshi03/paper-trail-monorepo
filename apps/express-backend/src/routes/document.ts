@@ -5,7 +5,7 @@ import {
   createDocument,
   updateDocument,
   deleteDocument,
-} from "../controllers/document";
+} from "../controllers/document.ts";
 
 const router = express.Router();
 

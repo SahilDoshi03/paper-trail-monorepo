@@ -1,7 +1,7 @@
 
 import { Request, Response } from "express";
-import * as userService from "../services/user";
-import { PartialUserSchema, UserSchema } from "../schemas/User";
+import * as userService from "../services/user.ts";
+import { PartialUserSchema, UserSchema } from "../schemas/User.ts";
 import z from "zod";
 
 const getUsers = async (_: Request, res: Response) => {

@@ -1,30 +1,12 @@
 import { Request, Response } from "express";
-import * as documentService from "../services/document";
-import { PartialDocumentSchema } from "../schemas/Document";
+import * as documentService from "../services/document.ts";
 import z from "zod";
 
 const getDocuments = async (req: Request, res: Response) => {
-  const schema = z.object({
-    "x-user-id": z.coerce.string(),
-  });
-
-  const result = schema.safeParse(req.headers);
-
-  if (!result.success) {
-    res.status(400).json({ error: "Invalid or missing userId" });
-    return;
-  }
-
-  const userId = result.data["x-user-id"];
-
+  const userId = req.headers["x-user-id"] as string; //Checked in middleware
   try {
-    if (userId) {
-      const documents = await documentService.getDocuments(userId);
-      res.status(200).json({ count: documents.length, documents });
-    } else {
-      const documents = await documentService.getDocuments();
-      res.status(200).json({ count: documents.length, documents });
-    }
+    const documents = await documentService.getDocuments(userId);
+    res.status(200).json({ count: documents.length, documents });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch documents" });
   }
@@ -33,18 +15,7 @@ const getDocuments = async (req: Request, res: Response) => {
 const getDocumentById = async (req: Request, res: Response) => {
   const docId = req.params.id;
 
-  const schema = z.object({
-    "x-user-id": z.coerce.string(),
-  });
-
-  const result = schema.safeParse(req.headers);
-
-  if (!result.success) {
-    res.status(400).json({ error: "Invalid or missing userId" });
-    return;
-  }
-
-  const userId: string = result.data["x-user-id"];
+  const userId = req.headers["x-user-id"] as string; //Checked in middleware
 
   try {
     const document = await documentService.getDocumentById(docId);
@@ -69,18 +40,7 @@ const getDocumentById = async (req: Request, res: Response) => {
 };
 
 const createDocument = async (req: Request, res: Response) => {
-  const schema = z.object({
-    "x-user-id": z.coerce.string(),
-  });
-
-  const result = schema.safeParse(req.headers);
-
-  if (!result.success) {
-    res.status(400).json({ error: "Invalid or missing userId" });
-    return;
-  }
-
-  const userId: string = result.data["x-user-id"];
+  const userId = req.headers["x-user-id"] as string; //Checked in middleware
 
   try {
     const document = await documentService.createDocument(userId);
@@ -93,18 +53,7 @@ const createDocument = async (req: Request, res: Response) => {
 const updateDocument = async (req: Request, res: Response) => {
   const docId = req.params.id;
 
-  const schema = z.object({
-    "x-user-id": z.coerce.string(),
-  });
-
-  const result = schema.safeParse(req.headers);
-
-  if (!result.success) {
-    res.status(400).json({ error: "Invalid or missing userId" });
-    return;
-  }
-
-  const userId: string = result.data["x-user-id"];
+  const userId = req.headers["x-user-id"] as string; //Checked in middleware
 
   const doc = req.body;
 
@@ -129,8 +78,10 @@ const updateDocument = async (req: Request, res: Response) => {
     res.status(200).json({ document: updatedDocument });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      res.status(400).json({ error: "Validation Error", details: error });
-      return
+      res
+        .status(400)
+        .json({ error: "Validation Error", details: error.issues });
+      return;
     }
     res.status(500).json({ error: "Failed to update document" });
   }
@@ -139,18 +90,7 @@ const updateDocument = async (req: Request, res: Response) => {
 const deleteDocument = async (req: Request, res: Response) => {
   const docId = req.params.id;
 
-  const schema = z.object({
-    "x-user-id": z.coerce.string(),
-  });
-
-  const result = schema.safeParse(req.headers);
-
-  if (!result.success) {
-    res.status(400).json({ error: "Invalid or missing userId" });
-    return;
-  }
-
-  const userId: string = result.data["x-user-id"];
+  const userId = req.headers["x-user-id"] as string; //Checked in middleware
 
   try {
     const document = await documentService.getDocumentById(docId);
