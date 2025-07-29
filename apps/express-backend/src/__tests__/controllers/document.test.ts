@@ -1,8 +1,9 @@
 import request from "supertest";
 import express from "express";
-import * as documentService from "../../src/services/document.ts";
-import documentRouter from "../../src/routes/document.ts"; // Adjust path if needed
+import * as documentService from "../../services/document.ts";
+import documentRouter from "../../routes/document.ts"; // Adjust path if needed
 import { jest, describe, beforeEach, it, expect } from "@jest/globals";
+import {expressApp} from '../../expressApp.ts'
 
 jest.mock("../services/document.ts");
 
@@ -10,8 +11,8 @@ const mockDocumentService = documentService as jest.Mocked<
   typeof documentService
 >;
 
-const app = express();
-app.use(express.json());
+const app = expressApp()
+
 app.use((req, res, next) => {
   // Mock middleware: inject x-user-id
   req.headers["x-user-id"] = "test-user";

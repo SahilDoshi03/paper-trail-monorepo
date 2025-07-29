@@ -1,17 +1,15 @@
 import dotenv from "dotenv";
 import type { Request, Response } from "express";
-import express from "express";
 import { validateUserId } from "./middleware/auth.ts";
 import documentRouter from "./routes/document.ts";
 import userRouter from "./routes/user.ts";
+import { expressApp } from "./expressApp.ts";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3001;
 
-const app = express();
-
-app.use(express.json());
+const app = expressApp()
 
 app.get("/api/healthcheck", (_: Request, res: Response) => {
   res.status(200).send("App is running");
