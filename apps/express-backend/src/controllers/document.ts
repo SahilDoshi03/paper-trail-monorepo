@@ -2,8 +2,8 @@ import type { Request, Response } from "express";
 import * as documentService from "../services/document.ts";
 import z from "zod";
 
-const getDocuments = async (req: Request, res: Response) => {
-  const userId = req.headers["x-user-id"] as string; //Checked in middleware
+const getDocuments = async (res: Response) => {
+  const userId: string = res.locals.userId
   try {
     const documents = await documentService.getDocuments(userId);
     res.status(200).json({ count: documents.length, documents });
@@ -15,7 +15,7 @@ const getDocuments = async (req: Request, res: Response) => {
 const getDocumentById = async (req: Request, res: Response) => {
   const docId = req.params.id;
 
-  const userId = req.headers["x-user-id"] as string; //Checked in middleware
+  const userId: string = res.locals.userId
 
   try {
     const document = await documentService.getDocumentById(docId);
@@ -40,7 +40,7 @@ const getDocumentById = async (req: Request, res: Response) => {
 };
 
 const createDocument = async (req: Request, res: Response) => {
-  const userId = req.headers["x-user-id"] as string; //Checked in middleware
+  const userId: string = res.locals.userId
 
   try {
     const document = await documentService.createDocument(userId);
@@ -53,7 +53,7 @@ const createDocument = async (req: Request, res: Response) => {
 const updateDocument = async (req: Request, res: Response) => {
   const docId = req.params.id;
 
-  const userId = req.headers["x-user-id"] as string; //Checked in middleware
+  const userId: string = res.locals.userId
 
   const doc = req.body;
 
@@ -90,7 +90,7 @@ const updateDocument = async (req: Request, res: Response) => {
 const deleteDocument = async (req: Request, res: Response) => {
   const docId = req.params.id;
 
-  const userId = req.headers["x-user-id"] as string; //Checked in middleware
+  const userId: string = res.locals.userId
 
   try {
     const document = await documentService.getDocumentById(docId);

@@ -21,5 +21,7 @@ export const validateUserId = (
       });
   }
 
+  res.locals.userId = result.data["x-user-id"]
+
   next();
 };
