@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  optimizePackageImports:['@prisma/client'],
   experimental:{
     webpackMemoryOptimizations: true
   },

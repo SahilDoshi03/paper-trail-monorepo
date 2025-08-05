@@ -2,7 +2,7 @@ import type { Request, Response } from "express";
 import * as documentService from "../services/document.ts";
 import z from "zod";
 
-const getDocuments = async (res: Response) => {
+const getDocuments = async (_: Request, res: Response) => {
   const userId: string = res.locals.userId
   try {
     const documents = await documentService.getDocuments(userId);
@@ -39,7 +39,7 @@ const getDocumentById = async (req: Request, res: Response) => {
   }
 };
 
-const createDocument = async (req: Request, res: Response) => {
+const createDocument = async (_: Request, res: Response) => {
   const userId: string = res.locals.userId
 
   try {

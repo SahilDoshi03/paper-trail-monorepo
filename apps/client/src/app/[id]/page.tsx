@@ -14,7 +14,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Document() {
-  const { data: userData } = useSession();
+  const { data: userData, status: sessionStatus } = useSession();
   const router = useRouter()
   const params = useParams()
   const [docValue, setDocValue] = useState<EditorDocument | null>(null);
@@ -43,8 +43,10 @@ export default function Document() {
       setCurrentTitle(fetchedDoc.title);
       setLoading(false);
     };
-    fetchDocument();
-  }, [docId]);
+    if(sessionStatus === "authenticated"){
+      fetchDocument();
+    }
+  }, [docId, sessionStatus, userData]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
