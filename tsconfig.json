@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true,
+    "target": "ES2017",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "rootDir": "./",    
     "baseUrl": "./",   

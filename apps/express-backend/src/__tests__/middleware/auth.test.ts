@@ -1,4 +1,4 @@
-import { validateUserId } from "../../middleware/auth.ts";
+import { validateUserId } from "../../middleware/auth";
 import type { Request, Response, NextFunction } from "express";
 import { jest, describe, it, expect } from "@jest/globals";
 

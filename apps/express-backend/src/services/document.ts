@@ -1,5 +1,5 @@
 import { prisma, type Prisma } from "@paper-trail/db";
-import type { CustomElement, PartialDocumentType } from "../schemas/Document.ts";
+import type { CustomElement, PartialDocumentType } from "../schemas/Document";
 
 const getDocuments = async (ownerId: string) => {
   try {
