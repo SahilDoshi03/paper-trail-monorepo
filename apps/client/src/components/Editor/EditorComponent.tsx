@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useCallback, useRef, useEffect, useMemo } from "react";
-import { Editor, BaseEditor, createEditor, Descendant, Transforms } from "slate";
+import {
+  Editor,
+  BaseEditor,
+  createEditor,
+  Descendant,
+  Transforms,
+} from "slate";
 import {
   Slate,
   Editable,
@@ -17,7 +23,7 @@ import type { EditorDocument } from "@/lib/schemas/Document";
 import { updateDocument } from "@/actions/Document";
 import debounce from "lodash.debounce";
 import { LiveblocksYjsProvider } from "@liveblocks/yjs";
-import * as Y from 'yjs'
+import * as Y from "yjs";
 import { withCursors, withYjs, YjsEditor } from "@slate-yjs/core";
 import { useSession } from "next-auth/react";
 import Cursors from "./Cursor";
@@ -84,49 +90,59 @@ type EditorComponentProps = {
   yProvider: LiveblocksYjsProvider;
 };
 
-const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorComponentProps) => {
-  const { data: sessionData } = useSession()
+const EditorComponent = ({
+  docId,
+  docValue,
+  sharedType,
+  yProvider,
+}: EditorComponentProps) => {
+  const { data: sessionData } = useSession();
 
-  const userId = sessionData?.user?.id
+  const userId = sessionData?.user?.id;
 
-  const initialValue: Descendant[] =
-    docValue.elements && docValue.elements.length > 0
-      ? docValue.elements
-      : [
-        {
-          type: "paragraph",
-          textAlign: "left",
-          fontFamily: "Arial",
-          paraSpaceAfter: 0,
-          paraSpaceBefore: 0,
-          lineHeight: 1.2,
-          children: [
-            {
-              text: "",
-              textAlign: "left",
-              color: "#ffffff",
-              fontSize: 16,
-              bold: false,
-              italic: false,
-              underline: false,
-              backgroundColor: "transparent",
-            },
-          ],
-        },
-      ];
+  const initialValue = useMemo<Descendant[]>(() => {
+    if (docValue.elements && docValue.elements.length > 0) {
+      return docValue.elements;
+    }
+
+    return [
+      {
+        type: "paragraph",
+        textAlign: "left",
+        fontFamily: "Arial",
+        paraSpaceAfter: 0,
+        paraSpaceBefore: 0,
+        lineHeight: 1.2,
+        children: [
+          {
+            text: "",
+            textAlign: "left",
+            color: "#ffffff",
+            fontSize: 16,
+            bold: false,
+            italic: false,
+            underline: false,
+            backgroundColor: "transparent",
+          },
+        ],
+      },
+    ];
+  }, [docValue.elements]);
 
   const editor = useMemo(() => {
     const e = withReact(
       withCursors(
         withYjs(createEditor(), sharedType),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         yProvider.awareness as any,
         {
           data: {
             name: sessionData?.user?.name || "sahil",
             color: "#215915",
-          }
-        }
-      ));
+          },
+        },
+      ),
+    );
 
     const { normalizeNode } = e;
     e.normalizeNode = (entry) => {
@@ -140,16 +156,19 @@ const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorCompo
     };
 
     return e;
-  }, []);
+  }, [initialValue, sessionData?.user?.name, sharedType, yProvider.awareness]);
 
   const editorRef = useRef<HTMLDivElement | null>(null);
 
-  const saveDocument = async (elements: Descendant[]) => {
-    if(!userId){
-      return
-    }
-    await updateDocument(userId, docId, { elements });
-  };
+  const saveDocument = useCallback(
+    async (elements: Descendant[]) => {
+      if (!userId) {
+        return;
+      }
+      await updateDocument(userId, docId, { elements });
+    },
+    [userId, docId], 
+  );
 
   const renderElement = useCallback((props: RenderElementProps) => {
     switch (props.element.type) {
@@ -164,31 +183,30 @@ const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorCompo
     return <Leaf {...props} />;
   }, []);
 
-  const debouncedSave = useCallback(
-    debounce((value: Descendant[]) => {
-      saveDocument(value);
-    }, 1000),
-    [docId],
-  );
-
   useEffect(() => {
     YjsEditor.connect(editor);
     return () => YjsEditor.disconnect(editor);
   }, [editor]);
 
+  const debouncedSaveRef = useRef<(value: Descendant[]) => void>(null);
+
   useEffect(() => {
+    const handler = debounce((value: Descendant[]) => {
+      saveDocument(value);
+    }, 1000);
+
+    debouncedSaveRef.current = handler;
+
     return () => {
-      debouncedSave.cancel();
+      handler.cancel();
     };
-  }, [debouncedSave]);
+  }, [docId, saveDocument]);
 
   useEffect(() => {
     if (editorRef.current) {
       ReactEditor.focus(editor);
     }
   }, [editor]);
-
-
 
   return (
     <Slate
@@ -200,7 +218,7 @@ const EditorComponent = ({ docId, docValue, sharedType, yProvider }: EditorCompo
         );
 
         if (isAstChange) {
-          debouncedSave(value);
+          debouncedSaveRef.current?.(value);
         }
       }}
     >

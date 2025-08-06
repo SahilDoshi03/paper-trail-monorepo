@@ -26,7 +26,7 @@ const DocumentsList = async () => {
             {documents.map((item: EditorDocument) => (
               <DocumentPreviewItem
                 key={item.id}
-                id={String(item.id)}
+                docId={String(item.id)}
                 image="https://ssl.gstatic.com/docs/templates/thumbnails/docs-blank-googlecolors.png"
                 title={item.title}
               />

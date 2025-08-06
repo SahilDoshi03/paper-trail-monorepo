@@ -11,13 +11,13 @@ import { useSession } from "next-auth/react";
 type DocumentPreviewItemProps = {
   image: string;
   title: string;
-  id?: string;
+  docId?: string;
 };
 
 const DocumentPreviewItem = ({
   image,
   title,
-  id,
+  docId,
 }: DocumentPreviewItemProps) => {
   const { data: userData } = useSession();
   const router = useRouter();
@@ -29,8 +29,8 @@ const DocumentPreviewItem = ({
   }
 
   const handleClick = async () => {
-    if (id) {
-      router.push(`/${id}`);
+    if (docId) {
+      router.push(`/${docId}`);
     } else {
       const document = await createDocument(userId);
       if (document) {
@@ -56,20 +56,22 @@ const DocumentPreviewItem = ({
         >
           {title}
         </div>
-        <Popover
-          trigger={
-            <button
-              data-modal-target="default-modal"
-              data-modal-toggle="default-modal"
-              className="icon-btn"
-              type="button"
-            >
-              <CiMenuKebab size={20} />
-            </button>
-          }
-        >
-          <DocumentListMenuPopover id={id as string} />
-        </Popover>
+        {docId && (
+          <Popover
+            trigger={
+              <button
+                data-modal-target="default-modal"
+                data-modal-toggle="default-modal"
+                className="icon-btn"
+                type="button"
+              >
+                <CiMenuKebab size={20} />
+              </button>
+            }
+          >
+            <DocumentListMenuPopover userId={userId} docId={docId} />
+          </Popover>
+        )}
       </div>
     </div>
   );

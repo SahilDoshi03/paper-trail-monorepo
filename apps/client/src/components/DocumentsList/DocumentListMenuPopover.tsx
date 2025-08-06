@@ -1,11 +1,19 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/common/Modal";
 import { deleteDocument, updateDocument } from "@/actions/Document";
 
-const DocumentListMenuPopover = ({ id }: { id: string }) => {
+type DocumentListMenuPopoverProps = {
+  userId: string;
+  docId: string;
+};
+
+const DocumentListMenuPopover = ({
+  userId,
+  docId,
+}: DocumentListMenuPopoverProps) => {
   const router = useRouter();
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
   const [newDocumentName, setNewDocumentName] = useState("");
@@ -16,7 +24,7 @@ const DocumentListMenuPopover = ({ id }: { id: string }) => {
   };
 
   const handleRenameConfirm = async () => {
-    await updateDocument(id, { title: newDocumentName });
+    await updateDocument(userId, docId, { title: newDocumentName });
     setIsRenameModalOpen(false);
     router.refresh();
   };
@@ -26,25 +34,34 @@ const DocumentListMenuPopover = ({ id }: { id: string }) => {
   };
 
   const handleDeleteConfirm = async () => {
-    await deleteDocument(id);
+    await deleteDocument(docId);
     setIsDeleteModalOpen(false);
     router.refresh();
   };
 
   const handleOpenInNewTab = () => {
-    window.open(`/${id}`, "_blank");
+    window.open(`/${docId}`, "_blank");
   };
 
   return (
     <>
       <ul className="flex flex-col w-max">
-        <li className="p-2 hover:bg-[#222222] cursor-pointer" onClick={handleRename}>
+        <li
+          className="p-2 hover:bg-[#222222] cursor-pointer"
+          onClick={handleRename}
+        >
           Rename
         </li>
-        <li className="p-2 hover:bg-[#222222] cursor-pointer" onClick={handleDelete}>
+        <li
+          className="p-2 hover:bg-[#222222] cursor-pointer"
+          onClick={handleDelete}
+        >
           Delete
         </li>
-        <li className="p-2 hover:bg-[#222222] cursor-pointer" onClick={handleOpenInNewTab}>
+        <li
+          className="p-2 hover:bg-[#222222] cursor-pointer"
+          onClick={handleOpenInNewTab}
+        >
           Open in new tab
         </li>
         <li className="p-2 hover:bg-[#222222] cursor-pointer">

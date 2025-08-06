@@ -85,7 +85,7 @@ const Login = () => {
                   </span>
                 </button>
                 <p className="mt-6 text-xs text-text-muted text-center">
-                  I agree to abide by paper-trail's {" "}
+                  I agree to abide by paper-trail&apos;s{" "}
                   <a href="#" className="border-b border-gray-500 border-dotted">
                     Terms of Service
                   </a>

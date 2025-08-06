@@ -46,7 +46,7 @@ export default function Document() {
     if(sessionStatus === "authenticated"){
       fetchDocument();
     }
-  }, [docId, sessionStatus, userData]);
+  }, [docId, sessionStatus, userId, userData]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
