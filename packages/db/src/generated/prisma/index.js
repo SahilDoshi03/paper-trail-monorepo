@@ -215,7 +215,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/sahil/Desktop/projects/paper-trail-monorepo/packages/db/src/generated/prisma",
+      "value": "/home/lspl370/Desktop/projects/paper-trail-monorepo/packages/db/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -229,7 +229,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/sahil/Desktop/projects/paper-trail-monorepo/packages/db/prisma/schema.prisma",
+    "sourceFilePath": "/home/lspl370/Desktop/projects/paper-trail-monorepo/packages/db/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
