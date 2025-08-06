@@ -7,14 +7,14 @@ export const validateUserId = (
   next: NextFunction,
 ) => {
   const schema = z.object({
-    "x-user-id": z.coerce.string(),
+    "x-user-id": z.string(),
   });
 
   const result = schema.safeParse(req.headers);
 
   if (!result.success) {
     return res
-      .status(400)
+      .status(401)
       .json({
         error: "Invalid or missing userId",
         details: result.error.issues,
