@@ -120,7 +120,7 @@ export default function Document() {
       {docValue && (
         <div className="flex flex-col gap-10 items-center justify-center">
           <LiveblocksProvider publicApiKey={"pk_dev_DYJpqEUIQdx448Q6y9zG3qY0SS1JGCfOqJA4yWsdtmesllY3mHU4JavReJKvq-Ou"}>
-            <RoomProvider id="my-room">
+            <RoomProvider id={docId}>
               <ClientSideSuspense fallback={<div>Loading...</div>}>
                 <CollaborativeEditor docId={docId} docValue={docValue} />
               </ClientSideSuspense>
