@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   ClientSideSuspense,
@@ -9,18 +9,19 @@ import { CollaborativeEditor } from "@/components/Editor/CollaborativeEditor";
 import { getDocument, updateDocument } from "@/actions/Document";
 import type { EditorDocument } from "@/lib/schemas/Document";
 import { notFound, useParams } from "next/navigation";
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { GoArrowLeft } from "react-icons/go";
 
 export default function Document() {
   const { data: userData, status: sessionStatus } = useSession();
-  const router = useRouter()
-  const params = useParams()
+  const router = useRouter();
+  const params = useParams();
   const [docValue, setDocValue] = useState<EditorDocument | null>(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [currentTitle, setCurrentTitle] = useState('');
+  const [currentTitle, setCurrentTitle] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const docId = params.id as string;
@@ -43,7 +44,7 @@ export default function Document() {
       setCurrentTitle(fetchedDoc.title);
       setLoading(false);
     };
-    if(sessionStatus === "authenticated"){
+    if (sessionStatus === "authenticated") {
       fetchDocument();
     }
   }, [docId, sessionStatus, userData]);
@@ -74,7 +75,7 @@ export default function Document() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       inputRef.current?.blur();
     }
   };
@@ -84,42 +85,54 @@ export default function Document() {
   }
 
   return (
-    <div className="p-10">
-      <div className="flex justify-between">
-        {isEditing ? (
-          <input
-            ref={inputRef}
-            type="text"
-            value={currentTitle}
-            onChange={handleTitleChange}
-            onBlur={handleTitleBlur}
-            onKeyDown={handleKeyDown}
-            className="text-[2rem] mb-4 outline-none border-b border-gray-300 focus:border-blue-500"
-          />
-        ) : (
-          <h2 className="text-[2rem] mb-4 cursor-pointer" onClick={handleTitleClick}>
-            {currentTitle}
-          </h2>
-        )}
+    <div className="py-2 px-10">
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col">
+          <div
+            className="flex items-center gap-1 text-sm hover:bg-accent-action w-fit px-2 py-1 rounded-xs font-bold cursor-pointer"
+            onClick={() => router.push("/")}
+          >
+            <GoArrowLeft />
+            <span>back</span>
+          </div>
+          {isEditing ? (
+            <input
+              ref={inputRef}
+              type="text"
+              value={currentTitle}
+              onChange={handleTitleChange}
+              onBlur={handleTitleBlur}
+              onKeyDown={handleKeyDown}
+              className="text-[2rem] mb-4 outline-none border-b border-gray-300 focus:border-blue-500"
+            />
+          ) : (
+            <h2
+              className="text-[2rem] mb-4 cursor-pointer"
+              onClick={handleTitleClick}
+            >
+              {currentTitle}
+            </h2>
+          )}
+        </div>
         <form
           action={async () => {
-            router.push("/")
-            await signOut()
-
+            router.push("/");
+            await signOut();
           }}
           className="cursor-pointer"
         >
-          <button
-            className="cursor-pointer"
-            type="submit"
-          >
+          <button className="p-2 rounded-sm hover:bg-accent-action cursor-pointer" type="submit">
             Sign Out
           </button>
         </form>
       </div>
       {docValue && (
         <div className="flex flex-col gap-10 items-center justify-center">
-          <LiveblocksProvider publicApiKey={"pk_dev_DYJpqEUIQdx448Q6y9zG3qY0SS1JGCfOqJA4yWsdtmesllY3mHU4JavReJKvq-Ou"}>
+          <LiveblocksProvider
+            publicApiKey={
+              "pk_dev_DYJpqEUIQdx448Q6y9zG3qY0SS1JGCfOqJA4yWsdtmesllY3mHU4JavReJKvq-Ou"
+            }
+          >
             <RoomProvider id={docId}>
               <ClientSideSuspense fallback={<div>Loading...</div>}>
                 <CollaborativeEditor docId={docId} docValue={docValue} />
@@ -131,4 +144,3 @@ export default function Document() {
     </div>
   );
 }
-
