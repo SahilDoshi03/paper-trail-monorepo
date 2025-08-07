@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react'
 
-jest.mock('@/components/DocumentsList/DocumentListPage', () => () => (
-  <div>Mocked DocumentListPage</div>
-))
+jest.mock('@/components/DocumentsList/DocumentListPage', () => {
+  const MockComponent = () => <div>Mocked DocumentListPage</div>
+  MockComponent.displayName = 'MockedDocumentListPage'
+  return MockComponent
+})
 
 import Home from '../app/page'
 
