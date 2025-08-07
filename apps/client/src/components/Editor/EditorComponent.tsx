@@ -292,7 +292,7 @@ const EditorComponent = ({
 
               case "x": {
                 event.preventDefault();
-                CustomEditor.toggleCheckbox(editor);
+                CustomEditor.toggleCheckboxBlock(editor);
                 break;
               }
             }
