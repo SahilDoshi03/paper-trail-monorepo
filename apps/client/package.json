@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "postinstall": "mkdir -p src/generated/prisma && cp ../../packages/db/src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node src/generated/prisma",
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch"
