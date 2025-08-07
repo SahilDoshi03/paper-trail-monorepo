@@ -52,5 +52,10 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "y-protocols": "1.0.6"
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { prisma } from "@paper-trail/db";
-import type { UserType, PartialUserType } from "../schemas/User.ts";
+import type { UserType, PartialUserType } from "../schemas/User";
 
 const getUsers = async () => {
   try {

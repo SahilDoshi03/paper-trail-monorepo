@@ -1,2 +1,2 @@
-export * from "./prisma.ts";
-export * from "./generated/prisma/index.js"
+export * from "./prisma";
+export * from "./generated/prisma/index"
