@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import type { Request, Response } from "express";
-import { validateUserId } from "./middleware/auth";
-import documentRouter from "./routes/document";
-import userRouter from "./routes/user";
-import { expressApp } from "./expressApp";
+import { validateUserId } from "./middleware/auth.ts";
+import documentRouter from "./routes/document.ts";
+import userRouter from "./routes/user.ts";
+import { expressApp } from "./expressApp.ts";
 
 dotenv.config();
 

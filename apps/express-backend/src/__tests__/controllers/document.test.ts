@@ -1,7 +1,7 @@
-import documentRouter from "../../routes/document";
+import documentRouter from "../../routes/document.ts";
 import { jest, describe, beforeEach, it } from "@jest/globals";
-import { expressApp } from "../../expressApp";
-import { validateUserId } from "../../middleware/auth";
+import { expressApp } from "../../expressApp.ts";
+import { validateUserId } from "../../middleware/auth.ts";
 import supertest from "supertest";
 
 const app = expressApp();

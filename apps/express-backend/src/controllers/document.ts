@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import * as documentService from "../services/document";
+import * as documentService from "../services/document.ts";
 import z from "zod";
 
 const getDocuments = async (_: Request, res: Response) => {
