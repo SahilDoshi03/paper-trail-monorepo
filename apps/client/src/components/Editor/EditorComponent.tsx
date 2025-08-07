@@ -36,6 +36,23 @@ declare module "slate" {
   }
 }
 
+const CheckboxElement = ({ attributes, children, element }: RenderElementProps) => {
+  const { checked } = element;
+
+  return (
+    <div {...attributes}>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => {}}
+        style={{ marginRight: '0.5rem' }}
+      />
+      <span>{children}</span>
+    </div>
+  );
+};
+
+
 const CodeElement = (props: RenderElementProps) => {
   return (
     <pre {...props.attributes}>
@@ -174,6 +191,8 @@ const EditorComponent = ({
     switch (props.element.type) {
       case "code":
         return <CodeElement {...props} />;
+      case "checkbox":
+        return <CheckboxElement {...props} />;
       default:
         return <DefaultElement {...props} />;
     }
@@ -268,6 +287,12 @@ const EditorComponent = ({
               case "u": {
                 event.preventDefault();
                 CustomEditor.toggleUnderlineMark(editor);
+                break;
+              }
+
+              case "x": {
+                event.preventDefault();
+                CustomEditor.toggleCheckbox(editor);
                 break;
               }
             }

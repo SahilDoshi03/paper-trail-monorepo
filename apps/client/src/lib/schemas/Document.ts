@@ -14,12 +14,13 @@ export const CustomTextSchema = z.object({
 });
 
 export const CustomElementSchema = z.object({
-  type: z.enum(["paragraph", "code"]),
+  type: z.enum(["paragraph", "code", "checkbox"]),
   textAlign: TextAlignEnum,
   lineHeight: z.number(),
   paraSpaceBefore: z.number(),
   paraSpaceAfter: z.number(),
   fontFamily: z.string(),
+  checked: z.boolean().optional(),
   children: z.array(CustomTextSchema),
 });
 

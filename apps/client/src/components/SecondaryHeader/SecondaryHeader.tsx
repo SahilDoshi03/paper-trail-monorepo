@@ -43,7 +43,7 @@ const SecondaryHearder = () => {
   const CurrentAlignIcon = alignmentIcons[currentAlign]
 
   return (
-    <div className="w-full h-10 flex justify-between items-center p-5 rounded-full bg-[#222222]">
+    <div className="w-full h-10 flex justify-between items-center p-5 my-5 rounded-full bg-[#222222]">
       <div className="flex items-center">
         <section className="flex items-center gap-2 px-2 border-r-1">
           <MdOutlinePrint size={20} />

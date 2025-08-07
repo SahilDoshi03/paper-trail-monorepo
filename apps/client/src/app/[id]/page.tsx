@@ -103,11 +103,11 @@ export default function Document() {
               onChange={handleTitleChange}
               onBlur={handleTitleBlur}
               onKeyDown={handleKeyDown}
-              className="text-[2rem] mb-4 outline-none border-b border-gray-300 focus:border-blue-500"
+              className="text-[2rem] outline-none border-b border-gray-300 focus:border-blue-500"
             />
           ) : (
             <h2
-              className="text-[2rem] mb-4 cursor-pointer"
+              className="text-[2rem] cursor-pointer"
               onClick={handleTitleClick}
             >
               {currentTitle}
@@ -127,7 +127,7 @@ export default function Document() {
         </form>
       </div>
       {docValue && (
-        <div className="flex flex-col gap-10 items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
           <LiveblocksProvider
             publicApiKey={
               "pk_dev_DYJpqEUIQdx448Q6y9zG3qY0SS1JGCfOqJA4yWsdtmesllY3mHU4JavReJKvq-Ou"

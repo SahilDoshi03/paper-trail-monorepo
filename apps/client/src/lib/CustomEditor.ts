@@ -21,7 +21,13 @@ export const CustomEditor = {
     const [match] = Editor.nodes(editor, {
       match: (n) => Element.isElement(n) && n.type === "code",
     });
+    return !!match;
+  },
 
+  isCheckboxBlockActive(editor: Editor) {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => Element.isElement(n) && n.type === "checkbox",
+    });
     return !!match;
   },
 
@@ -57,6 +63,15 @@ export const CustomEditor = {
     Transforms.setNodes(
       editor,
       { type: isActive ? "paragraph" : "code" },
+      { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) },
+    );
+  },
+
+  toggleCheckboxBlock(editor: Editor) {
+    const isActive = CustomEditor.isCheckboxBlockActive(editor);
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? "paragraph" : "checkbox" },
       { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) },
     );
   },
