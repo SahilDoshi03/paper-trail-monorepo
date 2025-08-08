@@ -44,7 +44,7 @@ const CheckboxElement = ({ attributes, children, element }: RenderElementProps) 
       <input
         type="checkbox"
         checked={checked}
-        onChange={(e) => {}}
+        onChange={() => {}}
         style={{ marginRight: '0.5rem' }}
       />
       <span>{children}</span>
