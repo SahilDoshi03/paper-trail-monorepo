@@ -31,6 +31,20 @@ export const CustomEditor = {
     return !!match;
   },
 
+    isBulletedListActive(editor: Editor) {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => Element.isElement(n) && n.type === "bulleted-list",
+    });
+    return !!match;
+  },
+
+  isNumberedListActive(editor: Editor) {
+    const [match] = Editor.nodes(editor, {
+      match: (n) => Element.isElement(n) && n.type === "numbered-list",
+    });
+    return !!match;
+  },
+
   toggleBoldMark(editor: Editor) {
     const isActive = CustomEditor.isBoldMarkActive(editor);
     if (isActive) {
@@ -74,6 +88,48 @@ export const CustomEditor = {
       { type: isActive ? "paragraph" : "checkbox" },
       { match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) },
     );
+  },
+
+  toggleBulletedList(editor: Editor) {
+    const isActive = CustomEditor.isBulletedListActive(editor);
+
+    Transforms.unwrapNodes(editor, {
+      match: (n) =>
+        !Editor.isEditor(n) &&
+        Element.isElement(n) &&
+        (n.type === "bulleted-list" || n.type === "numbered-list"),
+      split: true,
+    });
+
+    Transforms.setNodes(editor, {
+      type: isActive ? "paragraph" : "list-item",
+    });
+
+    if (!isActive) {
+      const block = { type: "bulleted-list", children: [] };
+      Transforms.wrapNodes(editor, block);
+    }
+  },
+
+  toggleNumberedList(editor: Editor) {
+    const isActive = CustomEditor.isNumberedListActive(editor);
+
+    Transforms.unwrapNodes(editor, {
+      match: (n) =>
+        !Editor.isEditor(n) &&
+        Element.isElement(n) &&
+        (n.type === "bulleted-list" || n.type === "numbered-list"),
+      split: true,
+    });
+
+    Transforms.setNodes(editor, {
+      type: isActive ? "paragraph" : "list-item",
+    });
+
+    if (!isActive) {
+      const block = { type: "numbered-list", children: [] };
+      Transforms.wrapNodes(editor, block);
+    }
   },
 
   setTextColor(editor: Editor, color: string) {

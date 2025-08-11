@@ -14,6 +14,7 @@ import {
   RenderElementProps,
   withReact,
   RenderLeafProps,
+  DefaultElement,
 } from "slate-react";
 import { ReactEditor } from "slate-react";
 import SecondaryHeader from "@/components/SecondaryHeader/SecondaryHeader";
@@ -27,6 +28,13 @@ import * as Y from "yjs";
 import { withCursors, withYjs, YjsEditor } from "@slate-yjs/core";
 import { useSession } from "next-auth/react";
 import Cursors from "./Cursor";
+import {
+  Leaf,
+  CheckboxElement,
+  NumberedListElement,
+  BulletedListElement,
+  CodeElement,
+} from "./EditorElements";
 
 declare module "slate" {
   interface CustomTypes {
@@ -35,70 +43,6 @@ declare module "slate" {
     Text: CustomText;
   }
 }
-
-const CheckboxElement = ({ attributes, children, element }: RenderElementProps) => {
-  const { checked } = element;
-
-  return (
-    <div {...attributes}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={() => {}}
-        style={{ marginRight: '0.5rem' }}
-      />
-      <span>{children}</span>
-    </div>
-  );
-};
-
-
-const CodeElement = (props: RenderElementProps) => {
-  return (
-    <pre {...props.attributes}>
-      <code>{props.children}</code>
-    </pre>
-  );
-};
-
-const DefaultElement = (props: RenderElementProps) => {
-  const { textAlign, lineHeight, paraSpaceBefore, paraSpaceAfter, fontFamily } =
-    props.element;
-
-  const style: React.CSSProperties = {
-    textAlign,
-    lineHeight,
-    marginTop: paraSpaceBefore,
-    marginBottom: paraSpaceAfter,
-    fontFamily,
-  };
-
-  return (
-    <p {...props.attributes} style={style}>
-      {props.children}
-    </p>
-  );
-};
-
-const Leaf = (props: RenderLeafProps) => {
-  const { bold, underline, italic, color, backgroundColor, fontSize } =
-    props.leaf;
-
-  const style: React.CSSProperties = {
-    color,
-    fontSize: `${fontSize}px`,
-    fontWeight: bold ? "bold" : "normal",
-    fontStyle: italic ? "italic" : "normal",
-    textDecoration: underline ? "underline" : "none",
-    backgroundColor: backgroundColor,
-  };
-
-  return (
-    <span {...props.attributes} style={style}>
-      {props.children}
-    </span>
-  );
-};
 
 type EditorComponentProps = {
   docId: string;
@@ -184,7 +128,7 @@ const EditorComponent = ({
       }
       await updateDocument(userId, docId, { elements });
     },
-    [userId, docId], 
+    [userId, docId],
   );
 
   const renderElement = useCallback((props: RenderElementProps) => {
@@ -193,6 +137,12 @@ const EditorComponent = ({
         return <CodeElement {...props} />;
       case "checkbox":
         return <CheckboxElement {...props} />;
+      case "bulleted-list":
+        return <BulletedListElement {...props} />;
+      case "numbered-list":
+        return <NumberedListElement {...props} />;
+      case "list-item":
+        return <li {...props.attributes}>{props.children}</li>;
       default:
         return <DefaultElement {...props} />;
     }
@@ -203,6 +153,10 @@ const EditorComponent = ({
   }, []);
 
   useEffect(() => {
+    if (editorRef.current) {
+      ReactEditor.focus(editor);
+    }
+
     YjsEditor.connect(editor);
     return () => YjsEditor.disconnect(editor);
   }, [editor]);
@@ -220,12 +174,6 @@ const EditorComponent = ({
       handler.cancel();
     };
   }, [docId, saveDocument]);
-
-  useEffect(() => {
-    if (editorRef.current) {
-      ReactEditor.focus(editor);
-    }
-  }, [editor]);
 
   return (
     <Slate

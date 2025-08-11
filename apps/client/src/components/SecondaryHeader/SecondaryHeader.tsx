@@ -202,10 +202,16 @@ const SecondaryHearder = () => {
           >
             <MdChecklist size={20} />
           </button>
-          <button className="icon-btn">
+          <button
+            className={`icon-btn ${CustomEditor.isBulletedListActive(editor) ? "bg-gray-700" : ""}`}
+            onClick={() => CustomEditor.toggleBulletedList(editor)}
+          >
             <MdFormatListBulleted size={20} />
           </button>
-          <button className="icon-btn">
+          <button
+            className={`icon-btn ${CustomEditor.isNumberedListActive(editor) ? "bg-gray-700" : ""}`}
+            onClick={() => CustomEditor.toggleNumberedList(editor)}
+          >
             <MdFormatListNumbered size={20} />
           </button>
           <button className="icon-btn">
