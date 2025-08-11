@@ -28,9 +28,13 @@ import * as Y from "yjs";
 import { withCursors, withYjs, YjsEditor } from "@slate-yjs/core";
 import { useSession } from "next-auth/react";
 import Cursors from "./Cursor";
-import CheckboxElement from "./EditorElements/CheckboxElement";
-import CodeElement from "./EditorElements/CodeElement";
-import Leaf from "./EditorElements/Leaf";
+import {
+  Leaf,
+  CheckboxElement,
+  NumberedListElement,
+  BulletedListElement,
+  CodeElement,
+} from "./EditorElements";
 
 declare module "slate" {
   interface CustomTypes {
@@ -124,7 +128,7 @@ const EditorComponent = ({
       }
       await updateDocument(userId, docId, { elements });
     },
-    [userId, docId], 
+    [userId, docId],
   );
 
   const renderElement = useCallback((props: RenderElementProps) => {
@@ -133,6 +137,12 @@ const EditorComponent = ({
         return <CodeElement {...props} />;
       case "checkbox":
         return <CheckboxElement {...props} />;
+      case "bulleted-list":
+        return <BulletedListElement {...props} />;
+      case "numbered-list":
+        return <NumberedListElement {...props} />;
+      case "list-item":
+        return <li {...props.attributes}>{props.children}</li>;
       default:
         return <DefaultElement {...props} />;
     }

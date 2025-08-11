@@ -14,7 +14,13 @@ export const CustomTextSchema = z.object({
 });
 
 export const CustomElementSchema = z.object({
-  type: z.enum(["paragraph", "code", "checkbox"]),
+  type: z.enum([
+    "paragraph",
+    "code",
+    "checkbox",
+    "numbered-list",
+    "bulleted-list",
+  ]),
   textAlign: TextAlignEnum,
   lineHeight: z.number(),
   paraSpaceBefore: z.number(),
@@ -31,8 +37,7 @@ export const DocumentSchema = z.object({
   title: z.string(),
   elements: z.array(DescendantSchema),
   createdAt: z.iso.datetime(),
-  updatedAt: z.iso.datetime()
-
+  updatedAt: z.iso.datetime(),
 });
 
 export const PartialDocumentSchema = DocumentSchema.partial();
@@ -46,4 +51,3 @@ export type CustomText = z.infer<typeof CustomTextSchema>;
 export type CustomElement = z.infer<typeof CustomElementSchema>;
 export type Descendant = CustomElement | CustomText;
 export type EditorDocument = z.infer<typeof DocumentSchema>;
-

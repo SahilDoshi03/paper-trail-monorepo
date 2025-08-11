@@ -31,16 +31,16 @@ import LineSpacingPopoverMenu from "./LineSpacingPopoverMenu";
 import FontsPopover from "./FontsPopover";
 
 const alignmentIcons = {
-  "left": MdOutlineFormatAlignLeft,
-  "center": MdOutlineFormatAlignCenter,
-  "right": MdOutlineFormatAlignRight,
-  "justify": MdOutlineFormatAlignJustify,
+  left: MdOutlineFormatAlignLeft,
+  center: MdOutlineFormatAlignCenter,
+  right: MdOutlineFormatAlignRight,
+  justify: MdOutlineFormatAlignJustify,
 };
 
 const SecondaryHearder = () => {
   const editor = useSlate();
   const currentAlign = CustomEditor.getTextAlign(editor);
-  const CurrentAlignIcon = alignmentIcons[currentAlign]
+  const CurrentAlignIcon = alignmentIcons[currentAlign];
 
   return (
     <div className="w-full h-10 flex justify-between items-center p-5 my-5 rounded-full bg-[#222222]">
@@ -144,9 +144,11 @@ const SecondaryHearder = () => {
             />
           </button>
           <button className="icon-btn relative p-1">
-            <MdBrush 
+            <MdBrush
               style={{ borderColor: CustomEditor.getHighlightColor(editor) }}
-              className="border-b-3" size={20} />
+              className="border-b-3"
+              size={20}
+            />
             <input
               type="color"
               value={CustomEditor.getHighlightColor(editor)}
@@ -195,10 +197,16 @@ const SecondaryHearder = () => {
           <button className="icon-btn">
             <MdChecklist size={20} />
           </button>
-          <button className="icon-btn">
+          <button
+            className={`icon-btn ${CustomEditor.isBulletedListActive(editor) ? "bg-gray-700" : ""}`}
+            onClick={() => CustomEditor.toggleBulletedList(editor)}
+          >
             <MdFormatListBulleted size={20} />
           </button>
-          <button className="icon-btn">
+          <button
+            className={`icon-btn ${CustomEditor.isNumberedListActive(editor) ? "bg-gray-700" : ""}`}
+            onClick={() => CustomEditor.toggleNumberedList(editor)}
+          >
             <MdFormatListNumbered size={20} />
           </button>
           <button className="icon-btn">
