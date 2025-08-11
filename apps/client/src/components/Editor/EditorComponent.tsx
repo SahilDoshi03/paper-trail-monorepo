@@ -28,7 +28,7 @@ import * as Y from "yjs";
 import { withCursors, withYjs, YjsEditor } from "@slate-yjs/core";
 import { useSession } from "next-auth/react";
 import Cursors from "./Cursor";
-import CheckboxElement from "./EditorElements/CheckboxElements";
+import CheckboxElement from "./EditorElements/CheckboxElement";
 import CodeElement from "./EditorElements/CodeElement";
 import Leaf from "./EditorElements/Leaf";
 
@@ -143,6 +143,10 @@ const EditorComponent = ({
   }, []);
 
   useEffect(() => {
+    if (editorRef.current) {
+      ReactEditor.focus(editor);
+    }
+
     YjsEditor.connect(editor);
     return () => YjsEditor.disconnect(editor);
   }, [editor]);
@@ -160,12 +164,6 @@ const EditorComponent = ({
       handler.cancel();
     };
   }, [docId, saveDocument]);
-
-  useEffect(() => {
-    if (editorRef.current) {
-      ReactEditor.focus(editor);
-    }
-  }, [editor]);
 
   return (
     <Slate
