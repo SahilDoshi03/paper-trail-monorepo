@@ -14,6 +14,7 @@ import {
   RenderElementProps,
   withReact,
   RenderLeafProps,
+  DefaultElement,
 } from "slate-react";
 import { ReactEditor } from "slate-react";
 import SecondaryHeader from "@/components/SecondaryHeader/SecondaryHeader";
@@ -27,6 +28,9 @@ import * as Y from "yjs";
 import { withCursors, withYjs, YjsEditor } from "@slate-yjs/core";
 import { useSession } from "next-auth/react";
 import Cursors from "./Cursor";
+import CheckboxElement from "./EditorElements/CheckboxElements";
+import CodeElement from "./EditorElements/CodeElement";
+import Leaf from "./EditorElements/Leaf";
 
 declare module "slate" {
   interface CustomTypes {
@@ -35,70 +39,6 @@ declare module "slate" {
     Text: CustomText;
   }
 }
-
-const CheckboxElement = ({ attributes, children, element }: RenderElementProps) => {
-  const { checked } = element;
-
-  return (
-    <div {...attributes}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={() => {}}
-        style={{ marginRight: '0.5rem' }}
-      />
-      <span>{children}</span>
-    </div>
-  );
-};
-
-
-const CodeElement = (props: RenderElementProps) => {
-  return (
-    <pre {...props.attributes}>
-      <code>{props.children}</code>
-    </pre>
-  );
-};
-
-const DefaultElement = (props: RenderElementProps) => {
-  const { textAlign, lineHeight, paraSpaceBefore, paraSpaceAfter, fontFamily } =
-    props.element;
-
-  const style: React.CSSProperties = {
-    textAlign,
-    lineHeight,
-    marginTop: paraSpaceBefore,
-    marginBottom: paraSpaceAfter,
-    fontFamily,
-  };
-
-  return (
-    <p {...props.attributes} style={style}>
-      {props.children}
-    </p>
-  );
-};
-
-const Leaf = (props: RenderLeafProps) => {
-  const { bold, underline, italic, color, backgroundColor, fontSize } =
-    props.leaf;
-
-  const style: React.CSSProperties = {
-    color,
-    fontSize: `${fontSize}px`,
-    fontWeight: bold ? "bold" : "normal",
-    fontStyle: italic ? "italic" : "normal",
-    textDecoration: underline ? "underline" : "none",
-    backgroundColor: backgroundColor,
-  };
-
-  return (
-    <span {...props.attributes} style={style}>
-      {props.children}
-    </span>
-  );
-};
 
 type EditorComponentProps = {
   docId: string;
