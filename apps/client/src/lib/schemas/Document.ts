@@ -20,6 +20,7 @@ export const CustomElementSchema = z.object({
     "checkbox",
     "numbered-list",
     "bulleted-list",
+    "list-item"
   ]),
   textAlign: TextAlignEnum,
   lineHeight: z.number(),

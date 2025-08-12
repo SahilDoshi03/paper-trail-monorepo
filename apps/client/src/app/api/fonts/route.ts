@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRedisClient } from "@/app/lib/redis";
+import { getRedisClient } from "@/lib/redis";
 import Fuse from "fuse.js"; 
 
 export async function GET(req: NextRequest) {

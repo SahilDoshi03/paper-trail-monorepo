@@ -1,6 +1,6 @@
 'use server'
 
-import { EditorDocument } from "@/app/lib/schemas/Document";
+import { EditorDocument } from "@/lib/schemas/Document";
 
 export async function getDocument(userId: string, docId: string): Promise<EditorDocument | null> {
   try {

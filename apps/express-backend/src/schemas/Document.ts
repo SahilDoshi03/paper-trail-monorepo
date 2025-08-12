@@ -14,7 +14,7 @@ export const CustomTextSchema = z.object({
 });
 
 export const CustomElementSchema = z.object({
-  type: z.enum(["paragraph", "code", "checkbox", "numbered-list", "bulleted-list"]),
+  type: z.enum(["paragraph", "code", "checkbox", "numbered-list", "bulleted-list", "list-item"]),
   textAlign: TextAlignEnum,
   lineHeight: z.number(),
   paraSpaceBefore: z.number(),
