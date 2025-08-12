@@ -19,7 +19,7 @@ const DocumentsList = async () => {
           title="Blank Document"
         />
       </section> 
-      <section className="w-full">
+      <section className="w-full pb-10">
         <h2 className="text-xl font-bold mb-4">Recent Documents</h2>
         {
           <div className="flex flex-wrap gap-4">

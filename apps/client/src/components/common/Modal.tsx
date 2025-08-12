@@ -18,6 +18,8 @@ const Modal = ({ title, open, onClose, children }: ModalProps) => {
       tabIndex={-1}
       aria-hidden={!open}
       className="fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center w-full h-full bg-black/50"
+      onMouseDown={(e) => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
     >
       <div className="relative p-4 w-full max-w-2xl max-h-full">
         <div className="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">

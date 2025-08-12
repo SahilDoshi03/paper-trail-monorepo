@@ -34,7 +34,7 @@ const DocumentListMenuPopover = ({
   };
 
   const handleDeleteConfirm = async () => {
-    await deleteDocument(docId);
+    await deleteDocument(userId, docId);
     setIsDeleteModalOpen(false);
     router.refresh();
   };
@@ -109,13 +109,13 @@ const DocumentListMenuPopover = ({
           <div className="flex justify-end mt-4">
             <button
               onClick={handleDeleteConfirm}
-              className="px-4 py-2 bg-red-500 text-white rounded-md mr-2"
+              className="px-4 py-2 bg-red-500 text-white rounded-md mr-2 cursor-pointer"
             >
               Delete
             </button>
             <button
               onClick={() => setIsDeleteModalOpen(false)}
-              className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md"
+              className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md cursor-pointer"
             >
               Cancel
             </button>

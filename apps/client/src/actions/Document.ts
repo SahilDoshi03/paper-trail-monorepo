@@ -99,11 +99,14 @@ export async function createDocument(userId: string): Promise<EditorDocument | n
   }
 }
 
-export async function deleteDocument(docId: string): Promise<boolean> {
+export async function deleteDocument(userId: string, docId: string): Promise<boolean> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
     const res = await fetch(`${baseUrl}/api/documents/${docId}`, {
       method: "DELETE",
+      headers: {
+        'x-user-id': userId
+      }
     });
 
     if (!res.ok) {
