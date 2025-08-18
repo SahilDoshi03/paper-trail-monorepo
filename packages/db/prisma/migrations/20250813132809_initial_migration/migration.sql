@@ -63,33 +63,16 @@ CREATE TABLE "Authenticator" (
 );
 
 -- CreateTable
-CREATE TABLE "ElementNode" (
+CREATE TABLE "Node" (
     "id" TEXT NOT NULL,
     "type" TEXT NOT NULL,
-    "textAlign" TEXT,
-    "fontFamily" TEXT,
-    "paraSpaceAfter" INTEGER,
-    "paraSpaceBefore" INTEGER,
-    "lineHeight" DOUBLE PRECISION,
-    "documentId" TEXT NOT NULL,
-
-    CONSTRAINT "ElementNode_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "TextNode" (
-    "id" TEXT NOT NULL,
     "text" TEXT,
-    "textAlign" TEXT,
-    "color" TEXT,
-    "fontSize" INTEGER,
-    "bold" BOOLEAN,
-    "italic" BOOLEAN,
-    "underline" BOOLEAN,
-    "backgroundColor" TEXT,
-    "elementId" TEXT NOT NULL,
+    "props" JSONB NOT NULL DEFAULT '{}',
+    "parentId" TEXT,
+    "documentId" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
 
-    CONSTRAINT "TextNode_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Node_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -124,7 +107,7 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Authenticator" ADD CONSTRAINT "Authenticator_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ElementNode" ADD CONSTRAINT "ElementNode_documentId_fkey" FOREIGN KEY ("documentId") REFERENCES "Document"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Node" ADD CONSTRAINT "Node_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Node"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TextNode" ADD CONSTRAINT "TextNode_elementId_fkey" FOREIGN KEY ("elementId") REFERENCES "ElementNode"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Node" ADD CONSTRAINT "Node_documentId_fkey" FOREIGN KEY ("documentId") REFERENCES "Document"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

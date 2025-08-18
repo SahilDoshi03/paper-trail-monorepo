@@ -2,32 +2,28 @@ import { z } from "zod";
 
 export const TextAlignEnum = z.enum(["left", "center", "right", "justify"]);
 
-export const CustomTextSchema = z.object({
-  text: z.string(),
-  fontSize: z.number(),
-  color: z.string(),
-  bold: z.boolean(),
-  italic: z.boolean(),
-  underline: z.boolean(),
-  backgroundColor: z.string(),
-  textAlign: TextAlignEnum,
-});
+export const NodePropsSchema = z.record(z.string(), z.any());
 
-export const CustomElementSchema = z.object({
-  type: z.enum(["paragraph", "code", "checkbox", "numbered-list", "bulleted-list", "list-item"]),
-  textAlign: TextAlignEnum,
-  lineHeight: z.number(),
-  paraSpaceBefore: z.number(),
-  paraSpaceAfter: z.number(),
-  fontFamily: z.string(),
-  children: z.array(CustomTextSchema),
-});
-
-const DescendantSchema = z.union([CustomElementSchema, CustomTextSchema]);
+export const NodeSchema: z.ZodType<any> = z.lazy(() =>
+  z.object({
+    id: z.cuid().optional(),
+    type: z.string(),                  
+    text: z.string().nullable().optional(),
+    props: NodePropsSchema.default({}),
+    parentId: z.string().nullable().optional(),
+    order: z.number(),
+    children: z.array(NodeSchema).optional(),
+    documentId: z.string(),           
+  })
+);
 
 export const DocumentSchema = z.object({
-  title: z.string(),
-  elements: z.array(DescendantSchema),
+  id: z.cuid().optional(),
+  title: z.string().default("Untitled Document"),
+  nodes: z.array(NodeSchema).default([]),
+  ownerId: z.string(),
+  readAccessUsers: z.array(z.string()).default([]),
+  writeAccessUsers: z.array(z.string()).default([]),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime()
 });
@@ -35,9 +31,6 @@ export const DocumentSchema = z.object({
 export const PartialDocumentSchema = DocumentSchema.partial();
 
 export type TextAlign = z.infer<typeof TextAlignEnum>;
-export type CustomText = z.infer<typeof CustomTextSchema>;
-export type CustomElement = z.infer<typeof CustomElementSchema>;
-export type Descendant = CustomElement | CustomText;
 export type DocumentType = z.infer<typeof DocumentSchema>;
 export type PartialDocumentType = z.infer<typeof PartialDocumentSchema>
 

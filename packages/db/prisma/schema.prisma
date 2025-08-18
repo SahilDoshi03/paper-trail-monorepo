@@ -78,40 +78,34 @@ model Authenticator {
   @@id([userId, credentialID])
 }
 
-model ElementNode {
-  id              String     @id @default(cuid())
-  type            String
-  textAlign       String?
-  fontFamily      String?
-  paraSpaceAfter  Int?
-  paraSpaceBefore Int?
-  lineHeight      Float?
-  documentId      String
-  document        Document   @relation(fields: [documentId], references: [id])
-  children        TextNode[]
-}
+model Node {
+  id          String   @id @default(cuid())
+  type        String   // e.g., "paragraph", "heading-one", "text"
+  text        String?  // Only used for text nodes
 
-model TextNode {
-  id              String      @id @default(cuid())
-  text            String?
-  textAlign       String?
-  color           String?
-  fontSize        Int?
-  bold            Boolean?
-  italic          Boolean?
-  underline       Boolean?
-  backgroundColor String?
-  elementId       String
-  element         ElementNode @relation(fields: [elementId], references: [id])
+  // All formatting, alignment, style, etc.
+  props       Json     @default("{}") // Flexible JSON for node-specific props
+
+  // Tree structure
+  parentId    String?
+  parent      Node?    @relation("NodeChildren", fields: [parentId], references: [id])
+  children    Node[]   @relation("NodeChildren")
+
+  // Link to the document
+  documentId  String
+  document    Document @relation("DocumentToNode", fields: [documentId], references: [id])
+
+  // Order within the parent
+  order       Int
 }
 
 model Document {
-  id               String        @id @default(cuid())
-  title            String        @default("Untitled Document")
-  elements         ElementNode[]
+  id               String   @id @default(cuid())
+  title            String   @default("Untitled Document")
+  nodes            Node[]   @relation("DocumentToNode")
   ownerId          String
   readAccessUsers  String[]
   writeAccessUsers String[]
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

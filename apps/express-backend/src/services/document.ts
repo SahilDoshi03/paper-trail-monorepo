@@ -1,14 +1,18 @@
 import { prisma, type Prisma } from "@paper-trail/db";
-import type { CustomElement, PartialDocumentType } from "../schemas/Document.ts";
+import type { PartialDocumentType } from "../schemas/Document.ts";
 
+// Get all documents for an owner
 const getDocuments = async (ownerId: string) => {
   try {
     return await prisma.document.findMany({
       where: { ownerId },
       include: {
-        elements: {
+        nodes: {
+          orderBy: { order: "asc" },
           include: {
-            children: true,
+            children: {
+              orderBy: { order: "asc" },
+            },
           },
         },
       },
@@ -19,14 +23,18 @@ const getDocuments = async (ownerId: string) => {
   }
 };
 
+// Get single document by ID
 const getDocumentById = async (id: string) => {
   try {
     return await prisma.document.findUnique({
       where: { id },
       include: {
-        elements: {
+        nodes: {
+          orderBy: { order: "asc" },
           include: {
-            children: true,
+            children: {
+              orderBy: { order: "asc" },
+            },
           },
         },
       },
@@ -37,6 +45,7 @@ const getDocumentById = async (id: string) => {
   }
 };
 
+// Create a new document with one empty paragraph node
 const createDocument = async (ownerId: string) => {
   try {
     return await prisma.document.create({
@@ -45,26 +54,27 @@ const createDocument = async (ownerId: string) => {
         ownerId,
         readAccessUsers: [],
         writeAccessUsers: [],
-        elements: {
+        nodes: {
           create: [
             {
               type: "paragraph",
-              textAlign: "left",
-              fontFamily: "Arial",
-              paraSpaceAfter: 0,
-              paraSpaceBefore: 0,
-              lineHeight: 1.2,
+              text: null,
+              props: { textAlign: "left", fontFamily: "Arial", lineHeight: 1.2 },
+              order: 0,
               children: {
                 create: [
                   {
+                    type: "text",
                     text: "",
-                    textAlign: "left",
-                    color: "#ffffff",
-                    fontSize: 16,
-                    bold: false,
-                    italic: false,
-                    underline: false,
-                    backgroundColor: "transparent",
+                    props: {
+                      color: "#ffffff",
+                      fontSize: 16,
+                      bold: false,
+                      italic: false,
+                      underline: false,
+                      backgroundColor: "transparent",
+                    },
+                    order: 0,
                   },
                 ],
               },
@@ -73,10 +83,9 @@ const createDocument = async (ownerId: string) => {
         },
       },
       include: {
-        elements: {
-          include: {
-            children: true,
-          },
+        nodes: {
+          orderBy: { order: "asc" },
+          include: { children: { orderBy: { order: "asc" } } },
         },
       },
     });
@@ -86,9 +95,24 @@ const createDocument = async (ownerId: string) => {
   }
 };
 
+// Recursive helper to convert Slate JSON → Prisma create structure
+const mapSlateNodeToPrisma = (node: any, index: number): Prisma.NodeCreateWithoutDocumentInput => {
+  const { type, text, children, ...rest } = node;
+  return {
+    type,
+    text: text ?? null,
+    props: rest || {},
+    order: index,
+    children: {
+      create: (children ?? []).map(mapSlateNodeToPrisma),
+    },
+  };
+};
+
+// Update document (replace all nodes)
 const updateDocument = async (id: string, doc: PartialDocumentType) => {
   try {
-    const { elements, ...restFields } = doc;
+    const { nodes, ...restFields } = doc;
 
     const data: Partial<Prisma.DocumentUpdateInput> = {};
 
@@ -98,49 +122,15 @@ const updateDocument = async (id: string, doc: PartialDocumentType) => {
       }
     }
 
-    if (elements && elements.length > 0) {
-      await prisma.textNode.deleteMany({
-        where: {
-          element: { documentId: id },
-        },
+    if (nodes && nodes.length > 0) {
+      // Delete existing tree
+      await prisma.node.deleteMany({
+        where: { documentId: id },
       });
 
-      await prisma.elementNode.deleteMany({
-        where: {
-          documentId: id,
-        },
-      });
-
-      const elementNodes = elements.filter(
-        (el): el is CustomElement =>
-          typeof el === "object" && "type" in el && "children" in el,
-      );
-
-      data.elements = {
-        create: elementNodes.map(
-          (el): Prisma.ElementNodeCreateWithoutDocumentInput => ({
-            type: el.type,
-            textAlign: el.textAlign,
-            fontFamily: el.fontFamily,
-            paraSpaceAfter: el.paraSpaceAfter,
-            paraSpaceBefore: el.paraSpaceBefore,
-            lineHeight: el.lineHeight,
-            children: {
-              create: el.children.map(
-                (child): Prisma.TextNodeCreateWithoutElementInput => ({
-                  text: child.text,
-                  textAlign: child.textAlign,
-                  color: child.color,
-                  fontSize: child.fontSize,
-                  bold: child.bold,
-                  italic: child.italic,
-                  underline: child.underline,
-                  backgroundColor: child.backgroundColor,
-                }),
-              ),
-            },
-          }),
-        ),
+      // Recreate tree
+      data.nodes = {
+        create: nodes.map(mapSlateNodeToPrisma),
       };
     }
 
@@ -152,10 +142,9 @@ const updateDocument = async (id: string, doc: PartialDocumentType) => {
       where: { id },
       data,
       include: {
-        elements: {
-          include: {
-            children: true,
-          },
+        nodes: {
+          orderBy: { order: "asc" },
+          include: { children: { orderBy: { order: "asc" } } },
         },
       },
     });
@@ -165,18 +154,11 @@ const updateDocument = async (id: string, doc: PartialDocumentType) => {
   }
 };
 
+// Delete document and all its nodes
 const deleteDocument = async (documentId: string) => {
   try {
-    await prisma.textNode.deleteMany({
-      where: {
-        element: { documentId },
-      },
-    });
-
-    await prisma.elementNode.deleteMany({
-      where: {
-        documentId,
-      },
+    await prisma.node.deleteMany({
+      where: { documentId },
     });
 
     await prisma.document.delete({
