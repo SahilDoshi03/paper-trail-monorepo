@@ -28,6 +28,7 @@ export async function updateDocument(
   docId: string,
   docValue: Partial<EditorDocument>,
 ): Promise<EditorDocument | null> {
+  console.log("DOC", docValue)
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3001";
     const res = await fetch(`${baseUrl}/api/documents/${docId}`, {

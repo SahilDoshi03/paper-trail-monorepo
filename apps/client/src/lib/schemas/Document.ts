@@ -36,7 +36,7 @@ const DescendantSchema = z.union([CustomElementSchema, CustomTextSchema]);
 export const DocumentSchema = z.object({
   id: z.number(),
   title: z.string(),
-  elements: z.array(DescendantSchema),
+  nodes: z.array(DescendantSchema),
   createdAt: z.iso.datetime(),
   updatedAt: z.iso.datetime(),
 });

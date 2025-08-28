@@ -1,7 +1,10 @@
-import { prisma, type Prisma } from "@paper-trail/db";
-import type { PartialDocumentType } from "../schemas/Document.ts";
+import { prisma } from "@paper-trail/db";
+import type {
+  UpdateDocumentInput,
+  SlateNodeInput,
+} from "../schemas/Document.ts";
+import { UpdateDocumentSchema } from "../schemas/Document.ts";
 
-// Get all documents for an owner
 const getDocuments = async (ownerId: string) => {
   try {
     return await prisma.document.findMany({
@@ -23,7 +26,6 @@ const getDocuments = async (ownerId: string) => {
   }
 };
 
-// Get single document by ID
 const getDocumentById = async (id: string) => {
   try {
     return await prisma.document.findUnique({
@@ -45,10 +47,10 @@ const getDocumentById = async (id: string) => {
   }
 };
 
-// Create a new document with one empty paragraph node
 const createDocument = async (ownerId: string) => {
   try {
-    return await prisma.document.create({
+    // Step 1: Create the document + top-level paragraph node
+    const doc = await prisma.document.create({
       data: {
         title: "Untitled Document",
         ownerId,
@@ -59,29 +61,42 @@ const createDocument = async (ownerId: string) => {
             {
               type: "paragraph",
               text: null,
-              props: { textAlign: "left", fontFamily: "Arial", lineHeight: 1.2 },
-              order: 0,
-              children: {
-                create: [
-                  {
-                    type: "text",
-                    text: "",
-                    props: {
-                      color: "#ffffff",
-                      fontSize: 16,
-                      bold: false,
-                      italic: false,
-                      underline: false,
-                      backgroundColor: "transparent",
-                    },
-                    order: 0,
-                  },
-                ],
+              props: {
+                textAlign: "left",
+                fontFamily: "Arial",
+                lineHeight: 1.2,
               },
+              order: 0,
             },
           ],
         },
       },
+      include: {
+        nodes: true,
+      },
+    });
+
+    const paragraphNode = doc.nodes[0];
+    await prisma.node.create({
+      data: {
+        type: "text",
+        text: "",
+        props: {
+          color: "#ffffff",
+          fontSize: 16,
+          bold: false,
+          italic: false,
+          underline: false,
+          backgroundColor: "transparent",
+        },
+        order: 0,
+        parentId: paragraphNode.id,
+        documentId: doc.id,
+      },
+    });
+
+    return await prisma.document.findUnique({
+      where: { id: doc.id },
       include: {
         nodes: {
           orderBy: { order: "asc" },
@@ -95,61 +110,73 @@ const createDocument = async (ownerId: string) => {
   }
 };
 
-// Recursive helper to convert Slate JSON → Prisma create structure
-const mapSlateNodeToPrisma = (node: any, index: number): Prisma.NodeCreateWithoutDocumentInput => {
-  const { type, text, children, ...rest } = node;
-  return {
-    type,
-    text: text ?? null,
-    props: rest || {},
-    order: index,
-    children: {
-      create: (children ?? []).map(mapSlateNodeToPrisma),
-    },
-  };
-};
+async function createNodesRecursively(
+  nodes: SlateNodeInput[],
+  documentId: string,
+  parentId: string | null = null,
+) {
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
 
-// Update document (replace all nodes)
-const updateDocument = async (id: string, doc: PartialDocumentType) => {
-  try {
-    const { nodes, ...restFields } = doc;
-
-    const data: Partial<Prisma.DocumentUpdateInput> = {};
-
-    for (const [key, value] of Object.entries(restFields)) {
-      if (value !== undefined) {
-        data[key as keyof typeof restFields] = value;
-      }
-    }
-
-    if (nodes && nodes.length > 0) {
-      // Delete existing tree
-      await prisma.node.deleteMany({
-        where: { documentId: id },
-      });
-
-      // Recreate tree
-      data.nodes = {
-        create: nodes.map(mapSlateNodeToPrisma),
-      };
-    }
-
-    if (Object.keys(data).length === 0) {
-      throw new Error("No valid fields provided for update.");
-    }
-
-    return await prisma.document.update({
-      where: { id },
-      data,
-      include: {
-        nodes: {
-          orderBy: { order: "asc" },
-          include: { children: { orderBy: { order: "asc" } } },
-        },
+    // Create node
+    const dbNode = await prisma.node.create({
+      data: {
+        type: node.type,
+        text: node.text ?? null,
+        props: node.props ?? {},
+        order: i,
+        parentId,
+        documentId,
       },
     });
+
+    // Recurse if children exist
+    if (node.children && node.children.length > 0) {
+      await createNodesRecursively(node.children, documentId, dbNode.id);
+    }
+  }
+}
+
+/* ---------------------------------------------
+ * Update Document Service
+ * -------------------------------------------*/
+
+const updateDocument = async (docId: string, data: UpdateDocumentInput) => {
+  try {
+    console.log("UPDATE DATA", data);
+    const parsed = UpdateDocumentSchema.parse(data);
+    console.log("HERE");
+    console.log("PARSED", parsed);
+
+    return await prisma.$transaction(async (tx) => {
+      // 1. If nodes are provided, replace them
+      if (parsed.nodes) {
+        await tx.node.deleteMany({ where: { documentId: docId } });
+        await createNodesRecursively(parsed.nodes, docId);
+      }
+
+      // 2. Update metadata (always)
+      await tx.document.update({
+        where: { id: docId },
+        data: {
+          title: parsed.title ?? undefined,
+          updatedAt: new Date(),
+        },
+      });
+
+      // 3. Return fresh doc
+      return await tx.document.findUnique({
+        where: { id: docId },
+        include: {
+          nodes: {
+            orderBy: { order: "asc" },
+            include: { children: { orderBy: { order: "asc" } } },
+          },
+        },
+      });
+    });
   } catch (error) {
-    console.error(`Error updating document with id ${id}:`, error);
+    console.error("Error updating document:", error);
     throw error;
   }
 };

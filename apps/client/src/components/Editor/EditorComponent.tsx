@@ -34,7 +34,7 @@ import {
   NumberedListElement,
   BulletedListElement,
   CodeElement,
-} from "./EditorElements";
+} from "./EditorNodes";
 
 declare module "slate" {
   interface CustomTypes {
@@ -62,8 +62,8 @@ const EditorComponent = ({
   const userId = sessionData?.user?.id;
 
   const initialValue = useMemo<Descendant[]>(() => {
-    if (docValue.elements && docValue.elements.length > 0) {
-      return docValue.elements;
+    if (docValue.nodes && docValue.nodes.length > 0) {
+      return docValue.nodes;
     }
 
     return [
@@ -88,7 +88,7 @@ const EditorComponent = ({
         ],
       },
     ];
-  }, [docValue.elements]);
+  }, [docValue.nodes]);
 
   const editor = useMemo(() => {
     const e = withReact(
@@ -122,11 +122,11 @@ const EditorComponent = ({
   const editorRef = useRef<HTMLDivElement | null>(null);
 
   const saveDocument = useCallback(
-    async (elements: Descendant[]) => {
+    async (nodes: Descendant[]) => {
       if (!userId) {
         return;
       }
-      await updateDocument(userId, docId, { elements });
+      await updateDocument(userId, docId, { nodes });
     },
     [userId, docId],
   );
@@ -184,6 +184,7 @@ const EditorComponent = ({
           (op) => op.type !== "set_selection",
         );
 
+        console.log("EDITOR VAL", value)
         if (isAstChange) {
           debouncedSaveRef.current?.(value);
         }

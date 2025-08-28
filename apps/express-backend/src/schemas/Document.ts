@@ -28,9 +28,26 @@ export const DocumentSchema = z.object({
   updatedAt: z.iso.datetime()
 });
 
+export const SlateNodeSchema: z.ZodType<any> = z.lazy(() =>
+  z.object({
+    type: z.string(),
+    text: z.string().nullable().optional(),
+    props: NodePropsSchema.default({}),
+    order: z.number(),
+    children: z.array(SlateNodeSchema).optional(),
+  })
+);
+
+export const UpdateDocumentSchema = z.object({
+  title: z.string().optional(),
+  nodes: z.array(SlateNodeSchema).optional(),
+});
+
 export const PartialDocumentSchema = DocumentSchema.partial();
 
 export type TextAlign = z.infer<typeof TextAlignEnum>;
 export type DocumentType = z.infer<typeof DocumentSchema>;
 export type PartialDocumentType = z.infer<typeof PartialDocumentSchema>
 
+export type SlateNodeInput = z.infer<typeof SlateNodeSchema>;
+export type UpdateDocumentInput = z.infer<typeof UpdateDocumentSchema>;
