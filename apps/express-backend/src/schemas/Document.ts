@@ -30,10 +30,10 @@ export const DocumentSchema = z.object({
 
 export const SlateNodeSchema: z.ZodType<any> = z.lazy(() =>
   z.object({
-    type: z.string(),
+    type: z.string().optional(),
     text: z.string().nullable().optional(),
     props: NodePropsSchema.default({}),
-    order: z.number(),
+    order: z.number().optional(),
     children: z.array(SlateNodeSchema).optional(),
   })
 );

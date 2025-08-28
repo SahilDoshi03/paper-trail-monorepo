@@ -116,14 +116,14 @@ async function createNodesRecursively(
   parentId: string | null = null,
 ) {
   for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
+    const { type, text, children, ...rest } = nodes[i];
 
     // Create node
     const dbNode = await prisma.node.create({
       data: {
-        type: node.type,
-        text: node.text ?? null,
-        props: node.props ?? {},
+        type: type ?? "text",
+        text: text ?? null,
+        props: rest ?? {},
         order: i,
         parentId,
         documentId,
@@ -131,8 +131,8 @@ async function createNodesRecursively(
     });
 
     // Recurse if children exist
-    if (node.children && node.children.length > 0) {
-      await createNodesRecursively(node.children, documentId, dbNode.id);
+    if (children && children.length > 0) {
+      await createNodesRecursively(children, documentId, dbNode.id);
     }
   }
 }
@@ -143,10 +143,7 @@ async function createNodesRecursively(
 
 const updateDocument = async (docId: string, data: UpdateDocumentInput) => {
   try {
-    console.log("UPDATE DATA", data);
     const parsed = UpdateDocumentSchema.parse(data);
-    console.log("HERE");
-    console.log("PARSED", parsed);
 
     return await prisma.$transaction(async (tx) => {
       // 1. If nodes are provided, replace them
