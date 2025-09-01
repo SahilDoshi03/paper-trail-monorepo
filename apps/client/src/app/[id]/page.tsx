@@ -30,6 +30,7 @@ export default function Document() {
 
   useEffect(() => {
     const fetchDocument = async () => {
+      if (!userId || docValue) return
       setLoading(true);
 
       if (!userId) {
@@ -47,7 +48,7 @@ export default function Document() {
     if (sessionStatus === "authenticated") {
       fetchDocument();
     }
-  }, [docId, sessionStatus, userId, userData]);
+  }, [docId, sessionStatus, userId]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {

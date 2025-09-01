@@ -157,8 +157,8 @@ const EditorComponent = ({
       ReactEditor.focus(editor);
     }
 
-    YjsEditor.connect(editor);
-    return () => YjsEditor.disconnect(editor);
+    // YjsEditor.connect(editor);
+    // return () => YjsEditor.disconnect(editor);
   }, [editor]);
 
   const debouncedSaveRef = useRef<(value: Descendant[]) => void>(null);
